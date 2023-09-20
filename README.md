@@ -1,1 +1,1 @@
-# Full Stack Application for KPI Schdule
+# Full Stack Application using Kotlin and React for KPI Schdule
