@@ -1,0 +1,49 @@
+.header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  &-title {
+    display: flex;
+    align-items: flex-start;
+    &-image {
+      margin: 1.2rem 0.2rem;
+      filter: invert(100%);
+    }
+    &-heading {
+      font-size: 2.7rem;
+      color: $main-text-color;
+    }
+  }
+
+  &-notes {
+    width: 30%;
+    display: flex;
+    justify-content: space-around;
+    &-text {
+      color: $main-text-color;
+      &:hover {
+        cursor: pointer;
+        color: $link-color;
+      }
+    }
+  }
+
+  &-auth {
+    width: 25%;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    &-image {
+      filter: invert(100%);
+    }
+
+    &-name {
+      @include textBoxMixin;
+      margin-right: 1rem;
+      &-text {
+        margin: 0;
+        white-space: nowrap;
+      }
+    }
+  }
+}

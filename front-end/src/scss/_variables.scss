@@ -1,0 +1,11 @@
+$main-text-color: white;
+$link-color: aqua;
+
+@mixin textBoxMixin {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 0.5rem;
+  height: 2rem;
+  padding: 0 1rem;
+}
