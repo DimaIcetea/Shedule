@@ -1,1 +1,1 @@
-# Front-end part on React
+# Front-end part using NextJS
