@@ -34,3 +34,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### ENV ###
+src/main/kotlin/schedule/kpi/.env

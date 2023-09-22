@@ -3,18 +3,27 @@ package schedule.kpi
 import io.ktor.server.application.*
 import io.ktor.server.cio.*
 import io.ktor.server.engine.*
-import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.sql.Database
-import schedule.kpi.plugins.*
-
+import schedule.kpi.features.login.configureLoginRouting
+import schedule.kpi.features.register.configureRegisterRouting
+import schedule.kpi.plugins.configureDatabases
+import schedule.kpi.plugins.configureRouting
+import schedule.kpi.plugins.configureSecurity
+import schedule.kpi.plugins.configureSerialization
 
 fun configureDatabase() {
-    Database.connect(
-        url = "jdbc:postgresql://localhost:5432/schedule",
-        driver = "org.postgresql.Driver",
-        user = "postgres",
-        password = "231213221"
-    )
+    val dbUsername = System.getProperty("DB_USERNAME")
+    val dbPassword = System.getProperty("DB_PASSWORD")
+    if (dbUsername != null && dbPassword != null) {
+        Database.connect(
+            url = "jdbc:postgresql://localhost:5432/schedule",
+            driver = "org.postgresql.Driver",
+            user = dbUsername,
+            password = dbPassword
+        )
+    } else {
+        println("Переменные окружения DB_USERNAME и DB_PASSWORD не установлены.")
+    }
 
     // Инициализация таблиц Exposed здесь, если необходимо
 }
@@ -27,6 +36,8 @@ fun main() {
 }
 
 fun Application.module() {
+    configureRegisterRouting()
+    configureLoginRouting()
     configureSerialization()
     configureDatabases()
     configureSecurity()

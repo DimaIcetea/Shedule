@@ -6,6 +6,7 @@ import io.ktor.http.*
 import io.ktor.server.testing.*
 import kotlin.test.*
 import schedule.kpi.plugins.*
+import kotlin.test.Test
 
 class ApplicationTest {
     @Test
