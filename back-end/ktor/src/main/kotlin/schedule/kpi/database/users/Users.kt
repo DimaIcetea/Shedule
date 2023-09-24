@@ -4,7 +4,6 @@ import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
-import kotlin.math.log
 
 object Users: Table("users") {
     private val login =  Users.varchar("login", 25)
@@ -12,7 +11,7 @@ object Users: Table("users") {
     private val username = Users.varchar("username", 30)
     private val email = Users.varchar("email", 25)
 
-    fun insert(userDTO: UserDTO){
+    fun insert(userDTO: UserDTO) {
         transaction {
             Users.insert {
                 it[login] = userDTO.login
@@ -22,17 +21,28 @@ object Users: Table("users") {
             }
 
         }
-        fun fetchUser(login: String): UserDTO{
-            val userModel = Users.select { Users.login.eq(login)}.single()
-            return UserDTO(
-                login = userModel[Users.login],
-                password = userModel[password],
-                username = userModel[username],
-                email = userModel[email]
-
-            )
+    }
+    fun fetchUser(login: String): UserDTO? {
+        return try {
+            transaction {
+                val userModel = Users.select { Users.login.eq(login) }.single()
+                UserDTO(
+                    login = userModel[Users.login],
+                    password = userModel[password],
+                    username = userModel[username],
+                    email = userModel[email]
+                )
+            }
+        } catch (e: Exception) {
+            null
         }
     }
 
 
-}
+
+
+
+    }
+
+
+

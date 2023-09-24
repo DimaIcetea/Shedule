@@ -14,12 +14,12 @@ import schedule.kpi.plugins.configureSerialization
 fun configureDatabase() {
     val dbUsername = System.getProperty("DB_USERNAME")
     val dbPassword = System.getProperty("DB_PASSWORD")
-    if (dbUsername != null && dbPassword != null) {
+    if (dbUsername == null && dbPassword == null) {
         Database.connect(
             url = "jdbc:postgresql://localhost:5432/schedule",
             driver = "org.postgresql.Driver",
-            user = dbUsername,
-            password = dbPassword
+            user = "postgres",
+            password = "231213221"
         )
     } else {
         println("Переменные окружения DB_USERNAME и DB_PASSWORD не установлены.")
