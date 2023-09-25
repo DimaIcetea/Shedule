@@ -27,6 +27,10 @@ repositories {
 }
 
 dependencies {
+    implementation ("io.ktor:ktor-server-netty: $ktor_version") // Зависимость для Netty сервера
+    implementation ("io.ktor:ktor-server-core:$ktor_version")
+    implementation ("io.ktor:ktor-features:1.6.8") // Зависимость для Features
+    implementation ("io.ktor:ktor-serialization:$ktor_version") // Зависимость для JSON
     implementation("io.ktor:ktor-server-content-negotiation-jvm")
     implementation("io.ktor:ktor-server-core-jvm")
     implementation("io.ktor:ktor-serialization-jackson-jvm")
@@ -38,8 +42,10 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-dao:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
 
+
+
+
     implementation("io.ktor:ktor-server-auth-jvm")
-    implementation("io.ktor:ktor-client-core-jvm")
     implementation("io.ktor:ktor-client-apache-jvm")
     implementation("io.ktor:ktor-server-cio-jvm")
     implementation("ch.qos.logback:logback-classic:$logback_version")

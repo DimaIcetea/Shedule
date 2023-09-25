@@ -19,11 +19,7 @@ fun Application.configureRouting() {
                 listOf(
                     Test(text = "Server Pashet!"),
                     Test(text = "Massive json")
-
             ))
         }
-
-
-
-    }
+        }
 }

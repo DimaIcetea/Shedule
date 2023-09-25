@@ -5,8 +5,6 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import org.jetbrains.exposed.exceptions.ExposedSQLException
-import schedule.kpi.cache.InMemoryCache
-import schedule.kpi.cache.TokenCache
 import schedule.kpi.database.tokens.TokenDTO
 import schedule.kpi.database.tokens.Tokens
 import schedule.kpi.database.users.UserDTO
@@ -41,20 +39,12 @@ class RegisterController(private val call: ApplicationCall) {
             }catch (e: ExposedSQLException){
                 call.respond(HttpStatusCode.Conflict, message = "User already exists")
             }
-
             Tokens.insert(TokenDTO(rowId = UUID.randomUUID().toString(), login = registerReceiveRemote.login,
                 token = token
             )
-
             )
             call.respond(RegisterResponseModel(token=token))
         }
-
-
-
-
-
-
 
     }
 }
