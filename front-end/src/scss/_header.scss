@@ -38,29 +38,39 @@
     }
 
     &-name {
-      @include textBoxMixin;
-      margin-right: 1rem;
+      // @include textBoxMixin;
     }
 
     &-button {
-      @include textBoxMixin;
-      margin-right: 1rem;
+      // @include textBoxMixin;
       cursor: pointer;
-      &:hover {
-        background-color: $link-color;
+      padding: 0.15rem;
+      &-active {
+        border-bottom: 0.1rem solid white;
+      }
+      &-not-active {
+        border-bottom: 0.1rem solid transparent;
       }
     }
 
     &-name,
     &-button {
       &-text {
+        font-size: 1.2rem;
         margin: 0;
+        color: white;
         white-space: nowrap;
+        &:hover {
+          color: $link-color;
+        }
       }
     }
 
     &-spacing {
-      margin: 1rem;
+      margin: 0 1rem;
+      height: 1.5rem;
+      background-color: white;
+      width: 0.15rem;
     }
   }
 }

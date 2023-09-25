@@ -30,21 +30,20 @@ export default function RegistrationPage() {
   function registrationFormSubmitHandler(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data: {
-      name: string,
-      email: string,
-      password: string,
-      doesPasswordMatch: boolean
+      name: string;
+      email: string;
+      password: string;
+      doesPasswordMatch: boolean;
     } = {
       name: e.target[0].value,
       email: e.target[1].value,
       password: e.target[2].value,
       doesPasswordMatch: e.target[2].value === e.target[3].value,
     };
-    const nameElements = data.name.split(" ")
-    if (nameElements.length === 3 && groupRegex.test(nameElements[0])){
-      console.log("Verified!")
+    const nameElements = data.name.split(" ");
+    if (nameElements.length === 3 && groupRegex.test(nameElements[0])) {
+      console.log("Verified!");
     }
-
   }
 
   return (
@@ -54,44 +53,42 @@ export default function RegistrationPage() {
         onSubmit={(e) => registrationFormSubmitHandler(e)}
       >
         <h1 className="registration-form-header">Cтворіть акаунт</h1>
+        <div className="registration-form-ruler" />
         <div className="registration-form-content">
-          <label className="registration-form-content-label">
-            Група, прізвище та ім&#39;я{" "}
-            <span style={{ color: "red", fontSize: "inherit" }}>*</span>
-          </label>
           <input
             className="registration-form-content-input"
             type="text"
             required
+            placeholder={"Група, прізвище та ім'я"}
           ></input>
 
-          <label className="registration-form-content-label">
-            Пошта <span style={{ color: "red", fontSize: "inherit" }}>*</span>
-          </label>
           <input
             className="registration-form-content-input"
             type="text"
             required
+            placeholder={"Пошта"}
           ></input>
 
-          <label className="registration-form-content-label">
-            Пароль <span style={{ color: "red", fontSize: "inherit" }}>*</span>
-          </label>
           <input
             className="registration-form-content-input"
             type="password"
             required
+            placeholder={"Пароль"}
           ></input>
 
-          <label className="registration-form-content-label">
-            Підтвердіть пароль{" "}
-            <span style={{ color: "red", fontSize: "inherit" }}>*</span>
-          </label>
           <input
             className="registration-form-content-input"
             type="password"
             required
+            placeholder={"Підтвердіть пароль"}
           ></input>
+
+          <div className="registration-form-content-checkbox">
+            <input type="checkbox" />
+            <p className="registration-form-content-checkbox-text">
+              Something Something Saber
+            </p>
+          </div>
 
           <button className="registration-form-content-button" type="submit">
             Створити акаунт!
