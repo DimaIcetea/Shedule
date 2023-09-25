@@ -1,0 +1,46 @@
+.registration {
+  display: flex;
+  justify-content: center;
+  &-form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    &-header {
+      font-size: 2.7rem;
+      color: $main-text-color;
+      margin-bottom: 2.809rem;
+    }
+
+    &-content {
+      display: flex;
+      flex-direction: column;
+      width: 85%;
+
+      &-label {
+        font-size: 1.2rem;
+        color: $main-text-color;
+        margin: 0.5rem 0;
+      }
+
+      &-button {
+        @include textBoxMixin;
+        margin: 1.4rem 0;
+        width: 80%;
+        height: 3rem;
+        align-self: center;
+        cursor: pointer;
+        font-size: 1.2rem;
+        &:hover {
+          background-color: $link-color;
+        }
+      }
+
+      &-input {
+        all: unset;
+        padding: 0.2rem;
+        background-color: $input-color;
+      }
+    }
+  }
+}

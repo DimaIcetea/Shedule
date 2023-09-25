@@ -6,7 +6,7 @@
     display: flex;
     align-items: flex-start;
     &-image {
-      margin: 1.2rem 0.2rem;
+      margin: 1.2rem 0.5rem;
       filter: invert(100%);
     }
     &-heading {
@@ -40,10 +40,27 @@
     &-name {
       @include textBoxMixin;
       margin-right: 1rem;
+    }
+
+    &-button {
+      @include textBoxMixin;
+      margin-right: 1rem;
+      cursor: pointer;
+      &:hover {
+        background-color: $link-color;
+      }
+    }
+
+    &-name,
+    &-button {
       &-text {
         margin: 0;
         white-space: nowrap;
       }
+    }
+
+    &-spacing {
+      margin: 1rem;
     }
   }
 }

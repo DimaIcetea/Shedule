@@ -1,13 +1,19 @@
-"use client";
-
-import { Montserrat } from "next/font/google";
-import Head from "next/head";
+import type { Metadata } from "next";
+import { Montserrat, Comic_Neue } from "next/font/google";
 import "./index.scss";
 import Header from "@/components/Header";
-import { createContext } from "react";
 
-const inter = Montserrat({ subsets: ["latin", "cyrillic"], weight: "400" });
-const LoginContext = createContext("");
+// let font: NextFont;
+// if(Math.random() * 1000 <= 1) font = Comic_Neue({ subsets: ["latin"], weight: "400" });
+// else font = Montserrat({ subsets: ["latin", "cyrillic"], weight: "400" });
+
+const font = Montserrat({ subsets: ["latin", "cyrillic"], weight: "400" });
+
+export const metadata: Metadata = {
+  title: "KPI Schedule",
+  icons: "/icon.jpg",
+  description: "Site for KPI Schedule",
+};
 
 export default function RootLayout({
   children,
@@ -15,18 +21,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <LoginContext.Provider value="">
-      <html lang="en">
-        <Head>
-          <link rel="icon" type="image/jpg" href="/icon.jpg" />
-          <meta name="title" content="KPI Schedule" />
-          <meta name="description" content="Site for KPI Schedule" />
-        </Head>
-        <body className={inter.className}>
-          <Header />
-          {children}
-        </body>
-      </html>
-    </LoginContext.Provider>
+    <html lang="en">
+      <body className={font.className}>
+        <Header />
+        {children}
+      </body>
+    </html>
   );
 }
