@@ -1,0 +1,9 @@
+.registrationWrapper {
+  display: flex;
+  justify-content: center;
+  &-verticalLine {
+    background-color: white;
+    width: 0.2rem;
+    margin: 0 2rem;
+  }
+}

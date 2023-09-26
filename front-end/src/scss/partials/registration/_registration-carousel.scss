@@ -1,0 +1,74 @@
+.registration {
+  &-carousel {
+    display: flex;
+    align-items: center;
+    &-arrow-left {
+      width: 0;
+      height: 0;
+      border-top: 3rem solid transparent;
+      border-bottom: 3rem solid transparent;
+      &-disabled {
+        border-right: 3rem solid #777777;
+        cursor: not-allowed;
+      }
+      &-active {
+        border-right: 3rem solid white;
+        &:hover {
+          border-right: 3rem solid #aaaaaa;
+        }
+      }
+    }
+
+    &-arrow-right {
+      width: 0;
+      height: 0;
+      border-top: 3rem solid transparent;
+      border-bottom: 3rem solid transparent;
+      border-left: 3rem solid white;
+      &-disabled {
+        border-left: 3rem solid #777777;
+        cursor: not-allowed;
+      }
+      &-active {
+        border-left: 3rem solid white;
+        &:hover {
+          border-left: 3rem solid #aaaaaa;
+        }
+      }
+    }
+
+    &-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 30rem;
+      height: 25rem;
+      margin: 0 1rem;
+      background-color: white;
+      border-radius: 2rem;
+      &-body {
+        width: 80%;
+        overflow-wrap: break-word;
+      }
+    }
+  }
+  &-pagination {
+    display: flex;
+    &-page {
+      height: 1rem;
+      width: 3rem;
+      margin: 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      &-not-active {
+        background-color: white;
+      }
+      &-active {
+        background-color: #777777;
+      }
+      &:hover {
+        background-color: #aaaaaa;
+      }
+    }
+  }
+}

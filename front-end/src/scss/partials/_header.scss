@@ -45,6 +45,7 @@
       // @include textBoxMixin;
       cursor: pointer;
       padding: 0.15rem;
+      text-decoration: none;
       &-active {
         border-bottom: 0.1rem solid white;
       }

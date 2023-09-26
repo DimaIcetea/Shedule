@@ -1,0 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+@import "./partials/variables";
+@import "./partials/header";
+@import "./partials/not-found";
+@import "./partials/registration/registration-form";
+@import "./partials/registration/registration-carousel";
+@import "./partials/registration/registration-page";
+
+* {
+  font-family: "Montserrat", sans-serif;
+}
+
+body {
+  background-image: url("../images/background.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}

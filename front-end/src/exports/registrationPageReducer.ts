@@ -7,7 +7,7 @@ export type InitValidationStateType = {
 
 export type VaildataionStateActions = {
   payload: boolean;
-  type: "name" | "email" | "passwordSecure" | "passwordMatch";
+  type: "name" | "email" | "passwordSecure" | "passwordMatch" | "reset";
 };
 
 export const vaildationInitState = {
@@ -40,6 +40,10 @@ export function validationReducer(
     case "passwordMatch": {
       const copy = { ...state };
       copy.passwordMatch = action.payload;
+      return copy;
+    }
+    default: {
+      const copy = { ...vaildationInitState };
       return copy;
     }
   }
