@@ -37,11 +37,6 @@ object Users: Table("users") {
             null
         }
     }
-
-
-
-
-
     }
 
 

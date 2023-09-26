@@ -41,6 +41,8 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-dao:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
+    implementation("io.github.cdimascio:dotenv-java:3.0.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
 
 
 

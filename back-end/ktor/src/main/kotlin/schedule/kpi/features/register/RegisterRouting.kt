@@ -9,7 +9,6 @@ fun Application.configureRegisterRouting() {
         post("/register") {
             val registerController = RegisterController(call)
             registerController.registerNewUser()
-
         }
     }
 }

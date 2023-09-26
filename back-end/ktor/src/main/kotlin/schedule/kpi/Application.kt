@@ -1,5 +1,6 @@
 package schedule.kpi
 
+import io.github.cdimascio.dotenv.Dotenv
 import io.ktor.http.*
 import io.ktor.serialization.jackson.*
 import io.ktor.serialization.kotlinx.json.*
@@ -23,20 +24,18 @@ import schedule.kpi.plugins.configureSerialization
 
 
 fun configureDatabase() {
-    val dbUsername = System.getProperty("DB_USERNAME")
-    val dbPassword = System.getProperty("DB_PASSWORD")
-    if (dbUsername == null && dbPassword == null) {
+    val dotenv = Dotenv.load()
+    val dbHost = dotenv["DB_HOST"]
+    val dbName = dotenv["DB_NAME"]
+    val dbDriver = dotenv["DB_DRIVER"]
+    val dbUser = dotenv["DB_USER"]
+    val dbPassword = dotenv["DB_PASSWORD"]
         Database.connect(
-            url = "jdbc:postgresql://localhost:5432/schedule",
-            driver = "org.postgresql.Driver",
-            user = "postgres",
-            password = "231213221"
+            url = "jdbc:postgresql://$dbHost/$dbName",
+            driver = dbDriver,
+            user = dbUser,
+            password = dbPassword
         )
-    } else {
-        println("Переменные окружения DB_USERNAME и DB_PASSWORD не установлены.")
-    }
-
-    // Инициализация таблиц Exposed здесь, если необходимо
 }
 
 fun Application.configureContentNegotiation() {
@@ -50,8 +49,6 @@ fun main() {
     configureDatabase()
     embeddedServer(CIO, port = 8080, host = "0.0.0.0", module = Application::module)
         .start(wait = true)
-
-    
 }
 
 fun Application.module() {
