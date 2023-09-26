@@ -33,6 +33,7 @@ class RegisterController(private val call: ApplicationCall) {
                         login = registerReceiveRemote.login,
                         password = registerReceiveRemote.password,
                         email = registerReceiveRemote.email,
+                        group =registerReceiveRemote.group,
                         username = ""
                     )
                 )

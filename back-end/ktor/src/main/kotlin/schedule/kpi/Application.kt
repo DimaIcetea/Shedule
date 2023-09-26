@@ -17,6 +17,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import schedule.kpi.database.tokens.Tokens
 import schedule.kpi.features.login.configureLoginRouting
 import schedule.kpi.features.register.configureRegisterRouting
+import schedule.kpi.features.study.configureStudyRouting
 import schedule.kpi.plugins.configureDatabases
 import schedule.kpi.plugins.configureRouting
 import schedule.kpi.plugins.configureSecurity
@@ -59,6 +60,7 @@ fun Application.module() {
     configureDatabases()
     configureSecurity()
     configureRouting()
+    configureStudyRouting()
     routing {
         get("/checkToken") {
             val token = call.request.header("Authorization")?.removePrefix("Bearer ")
