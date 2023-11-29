@@ -24,6 +24,10 @@
       flex-direction: column;
       width: 85%;
 
+      &-errorText {
+        color: red;
+      }
+
       &-button {
         @include textBoxMixin;
         margin: 0.4rem 0;

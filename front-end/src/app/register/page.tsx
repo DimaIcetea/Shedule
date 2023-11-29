@@ -1,5 +1,5 @@
 import RegistrationPage from "@/components/RegistrationPage";
 
-export default function Login() {
+export default function Registration() {
   return <RegistrationPage />;
 }

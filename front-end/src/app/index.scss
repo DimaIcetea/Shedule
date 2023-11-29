@@ -1,4 +1,5 @@
 @import "../scss/variables";
+@import "../scss/homePage";
 @import "../scss/header";
 @import "../scss/not-found";
 @import "../scss/registration";
@@ -8,4 +9,8 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
+}
+
+a {
+  all: unset;
 }

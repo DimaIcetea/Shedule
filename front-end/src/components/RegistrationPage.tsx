@@ -1,6 +1,8 @@
 "use client";
 
-import { localStorageAPIKeyKey } from "@/exports/localStorageKeys";
+import { homeRoute } from "@/exports/appRoutes";
+import { createKey } from "@/exports/createKey";
+import { localStorageAPIKeyKey, localStorageNameKey } from "@/exports/localStorageKeys";
 import {
   vaildationInitState,
   validationReducer,
@@ -15,34 +17,59 @@ const emailRegex =
 const passwordRegex =
   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
-const groupRegex = /[A-Z]+[A-Z]+[-]+[0-9]+[0-9]/;
+const groupRegex = /[А-ЯҐЄІЇ]+[А-ЯҐЄІЇ]+[-]+[0-9]+[0-9]/;
+
+type InputDataType = {
+  name: string;
+  email: string;
+  password: string;
+  doesPasswordMatch: boolean;
+};
 
 export default function RegistrationPage() {
   const router = useRouter();
-  const validationStatus = useReducer(validationReducer, vaildationInitState);
+  const [validationStatus, dispatchValidationStatus] = useReducer(
+    validationReducer,
+    vaildationInitState
+  );
 
   useEffect(() => {
     if (localStorage.getItem(localStorageAPIKeyKey)) {
-      router.push("/");
+      router.push(homeRoute);
     }
   }, []);
 
   function registrationFormSubmitHandler(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const data: {
-      name: string;
-      email: string;
-      password: string;
-      doesPasswordMatch: boolean;
-    } = {
+    dispatchValidationStatus({ type: "reset", payload: true });
+    let isCorrectInput = true;
+    const data: InputDataType = {
       name: e.target[0].value,
       email: e.target[1].value,
       password: e.target[2].value,
       doesPasswordMatch: e.target[2].value === e.target[3].value,
     };
     const nameElements = data.name.split(" ");
-    if (nameElements.length === 3 && groupRegex.test(nameElements[0])) {
-      console.log("Verified!");
+    if (!(nameElements.length === 3 && groupRegex.test(nameElements[0]))) {
+      dispatchValidationStatus({ type: "name", payload: false });
+      isCorrectInput = false;
+    }
+    if (!emailRegex.test(data.email)) {
+      dispatchValidationStatus({ type: "email", payload: false });
+      isCorrectInput = false;
+    }
+    if (!passwordRegex.test(data.password)) {
+      dispatchValidationStatus({ type: "passwordSecure", payload: false });
+      isCorrectInput = false;
+    }
+    if (!data.doesPasswordMatch) {
+      dispatchValidationStatus({ type: "passwordMatch", payload: false });
+      isCorrectInput = false;
+    }
+    if (isCorrectInput) {
+      localStorage.setItem(localStorageAPIKeyKey, createKey(16));
+      localStorage.setItem(localStorageNameKey, data.name)
+      router.push(homeRoute);
     }
   }
 
@@ -55,6 +82,28 @@ export default function RegistrationPage() {
         <h1 className="registration-form-header">Cтворіть акаунт</h1>
         <div className="registration-form-ruler" />
         <div className="registration-form-content">
+          {!validationStatus.email ? (
+            <h3 className="registration-form-content-errorText">
+              Неправильний формат пошти
+            </h3>
+          ) : null}
+          {!validationStatus.name ? (
+            <h3 className="registration-form-content-errorText">
+              Неправильний формат ім&apos;я
+            </h3>
+          ) : null}
+          {!validationStatus.passwordSecure ? (
+            <h3 className="registration-form-content-errorText">
+              Паролі не співпадають
+            </h3>
+          ) : null}
+          {!validationStatus.passwordMatch ? (
+            <h3 className="registration-form-content-errorText">
+              Пароль повинен мати 8 символів, та 1 цифру, букву та спеціальний
+              символ
+            </h3>
+          ) : null}
+
           <input
             className="registration-form-content-input"
             type="text"
@@ -82,13 +131,6 @@ export default function RegistrationPage() {
             required
             placeholder={"Підтвердіть пароль"}
           ></input>
-
-          <div className="registration-form-content-checkbox">
-            <input type="checkbox" />
-            <p className="registration-form-content-checkbox-text">
-              Something Something Saber
-            </p>
-          </div>
 
           <button className="registration-form-content-button" type="submit">
             Створити акаунт!

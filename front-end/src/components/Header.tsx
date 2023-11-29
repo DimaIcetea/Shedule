@@ -3,12 +3,29 @@
 import Image from "next/image";
 import logo from "../images/logo.gif";
 import profilePicture from "../images/profile.png";
-import { localStorageAPIKeyKey } from "@/exports/localStorageKeys";
+import logoutPicture from "../images/logout.png";
+import {
+  localStorageAPIKeyKey,
+  localStorageNameKey,
+} from "@/exports/localStorageKeys";
 import { loginRoute, registerRoute } from "@/exports/appRoutes";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function Header() {
-  const apiKey = localStorage.getItem(localStorageAPIKeyKey);
+  const pathName = usePathname();
+  
+  let apiKey: string | null = "";
+  let userName: string | null = "";
+  if (typeof window !== "undefined") {
+    apiKey = window.localStorage.getItem(localStorageAPIKeyKey);
+    userName = window.localStorage.getItem(localStorageNameKey);
+  }
+
+  function logoutHandler() {
+    localStorage.clear()
+    window.location.reload()
+  }
 
   return (
     <header className="header">
@@ -34,6 +51,14 @@ export default function Header() {
         {apiKey ? (
           <>
             <Image
+              className="header-auth-image header-auth-image-button"
+              src={logoutPicture}
+              width={45}
+              height={45}
+              alt="Вийти з профілю користувача"
+              onClick={logoutHandler}
+            />
+            <Image
               className="header-auth-image"
               src={profilePicture}
               width={60}
@@ -41,20 +66,24 @@ export default function Header() {
               alt="Профіль користувача"
             />
             <div className="header-auth-name">
-              <h3 className="header-auth-name-text">Шиян Кіріл ПО-21</h3>
+              <h3 className="header-auth-name-text">{userName}</h3>
             </div>
           </>
         ) : (
           <>
             <Link
-              className={`header-auth-button header-auth-button-${"not-active"}`}
+              className={`header-auth-button header-auth-button-${
+                pathName === registerRoute ? "active" : "not-active"
+              }`}
               href={registerRoute}
             >
               <h3 className="header-auth-name-text">Зареєструватись</h3>
             </Link>
             <div className="header-auth-spacing" />
             <Link
-              className={`header-auth-button header-auth-button-${"not-active"}`}
+              className={`header-auth-button header-auth-button-${
+                pathName === loginRoute ? "active" : "not-active"
+              }`}
               href={loginRoute}
             >
               <h3 className="header-auth-name-text">Увійти</h3>
