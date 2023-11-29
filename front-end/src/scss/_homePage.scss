@@ -1,3 +1,26 @@
+.groupSelector {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+
+  &-content {
+    background-color: $input-color;
+    border-radius: 1rem;
+    display: flex;
+    padding: 0 0.5rem;
+    align-items: center;
+
+    &-text {
+      margin: 0.5rem 0.2rem;
+    }
+
+    &-select {
+      background-color: #d9d9d9;
+      height: 1.3rem;
+    }
+  }
+}
+
 .contentSwitcher {
   display: flex;
   justify-content: center;
@@ -56,6 +79,11 @@
         background-color: $input-color;
         border-radius: 1rem;
 
+        &-headerText {
+            font-size: 1.3rem;
+        }
+
+        &-headerText,
         &-text {
           color: black;
           text-align: center;

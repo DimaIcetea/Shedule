@@ -42,7 +42,7 @@ export default function Header() {
       <div className="header-notes">
         {apiKey ? (
           <>
-            <h3 className="header-notes-text">Створити нотатку</h3>
+            <h3 className="header-notes-text">Редагувати розклад</h3>
             <h3 className="header-notes-text">Переглянути нотатки</h3>
           </>
         ) : null}
