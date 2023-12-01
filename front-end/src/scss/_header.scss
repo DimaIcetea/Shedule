@@ -1,0 +1,82 @@
+.header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  &-title {
+    display: flex;
+    align-items: flex-start;
+    &-image {
+      margin: 1.2rem 0.5rem;
+      filter: invert(100%);
+    }
+    &-heading {
+      font-size: 2.7rem;
+      color: $main-text-color;
+    }
+  }
+
+  &-notes {
+    width: 30%;
+    display: flex;
+    justify-content: space-around;
+    &-text {
+      color: $main-text-color;
+      &:hover {
+        cursor: pointer;
+        color: $link-color;
+      }
+    }
+  }
+
+  &-auth {
+    width: 25%;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    &-image {
+      filter: invert(100%);
+      &-button {
+        cursor: pointer;
+        &:hover {
+          color: $link-color;
+        }
+      }
+    }
+
+    &-name {
+      // @include textBoxMixin;
+    }
+
+    &-button {
+      // @include textBoxMixin;
+      cursor: pointer;
+      padding: 0.15rem;
+      &-active {
+        border-bottom: 0.1rem solid white;
+      }
+      &-not-active {
+        border-bottom: 0.1rem solid transparent;
+      }
+    }
+
+    &-name,
+    &-button {
+      &-text {
+        font-size: 1.2rem;
+        margin: 0;
+        color: white;
+        white-space: nowrap;
+        &:hover {
+          color: $link-color;
+        }
+      }
+    }
+
+    &-spacing {
+      margin: 0 1rem;
+      height: 1.5rem;
+      background-color: white;
+      width: 0.15rem;
+    }
+  }
+}

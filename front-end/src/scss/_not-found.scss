@@ -1,0 +1,19 @@
+.not-found {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  &-404 {
+    font-size: 4.5rem;
+    margin: 2rem 0;
+  }
+  &-link {
+    &:hover {
+      color: $link-color;
+    }
+  }
+  &-404,
+  &-text,
+  &-link {
+    color: $main-text-color;
+  }
+}
