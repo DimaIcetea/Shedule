@@ -23,7 +23,7 @@ class RegisterController(private val call: ApplicationCall) {
         val userDTO = Users.fetchUser(registerReceiveRemote.login)
 
         if(userDTO != null){
-            call.respond(HttpStatusCode.Conflict, message = "User already exists")
+            call.respond(HttpStatusCode.BadRequest, message = "User already exists")
         }else  {
             val token = UUID.randomUUID().toString()
 
@@ -33,18 +33,20 @@ class RegisterController(private val call: ApplicationCall) {
                         login = registerReceiveRemote.login,
                         password = registerReceiveRemote.password,
                         email = registerReceiveRemote.email,
-                        group =registerReceiveRemote.group,
                         username = ""
                     )
                 )
             }catch (e: ExposedSQLException){
-                call.respond(HttpStatusCode.Conflict, message = "User already exists")
+                call.respond(HttpStatusCode.BadRequest, "User with this username already exists")
             }
             Tokens.insert(TokenDTO(rowId = UUID.randomUUID().toString(), login = registerReceiveRemote.login,
                 token = token
             )
+
             )
-            call.respond(RegisterResponseModel(token=token))
+            val responseModel = RegisterResponseModel(token = token, message = "User registered successfully")
+            call.respond(HttpStatusCode.Created, responseModel)
+
         }
 
     }

@@ -8,11 +8,11 @@ data class RegisterReceiveRemote(
     val login: String,
     val email: String,
     val password: String,
-    val group: String
 )
 
 @Serializable
 data class RegisterResponseModel(
-    val token: String
+    val token: String,
+    val message: String
 
 )

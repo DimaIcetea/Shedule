@@ -18,7 +18,7 @@ class LoginController(private val call: ApplicationCall){
         val userDTO = Users.fetchUser(receive.login)
 
         if(userDTO == null){
-            call.respond(HttpStatusCode.BadRequest, "User not found")
+            call.respond(HttpStatusCode.Unauthorized, "User not found")
         } else {
             if(userDTO.password == receive.password){
                 val token = UUID.randomUUID().toString()
@@ -28,7 +28,8 @@ class LoginController(private val call: ApplicationCall){
                 )
 
                 )
-                call.respond(LoginResponseRemote(token=token))
+                val responseModel = LoginResponseRemote(token = token, message = "login successfully")
+                call.respond(HttpStatusCode.OK, responseModel)
 
             }else {
                 call.respond(HttpStatusCode.BadRequest, "invalid password")

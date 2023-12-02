@@ -10,7 +10,6 @@ object Users: Table("users") {
     private val password = Users.varchar("password", 25)
     private val username = Users.varchar("username", 30)
     private val email = Users.varchar("email", 25)
-    private val group = Users.varchar("group", 20)
 
     fun insert(userDTO: UserDTO) {
         transaction {
@@ -19,7 +18,6 @@ object Users: Table("users") {
                 it[password] = userDTO.password
                 it[username] = userDTO.username
                 it[email] = userDTO.email ?: ""
-                it[group] = userDTO.group
             }
 
         }
@@ -29,11 +27,10 @@ object Users: Table("users") {
             transaction {
                 val userModel = Users.select { Users.login.eq(login) }.single()
                 UserDTO(
-                    login = userModel[Users.login],
-                    password = userModel[password],
-                    username = userModel[username],
-                    email = userModel[email],
-                    group = userModel[group]
+                        login = userModel[Users.login],
+                        password = userModel[password],
+                        email = userModel[email],
+                        username = userModel[username]
                 )
             }
         } catch (e: Exception) {
