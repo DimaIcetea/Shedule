@@ -34,7 +34,8 @@ fun Application.configureStudyRouting() {
                 val studyController = StudyController(call)
                 studyController.updateLesson()
                 transaction { Lessons.deleteWhere { Lessons.id eq itemId } }
-                call.respond(message = "patched with id $itemId")
+                val messageID = itemId + 1
+                call.respond(message = "patched with id $messageID")
                 call.respond(HttpStatusCode.OK)
             } else {
                 call.respond(HttpStatusCode.BadRequest, "Invalid id format")
