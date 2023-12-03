@@ -1,8 +1,11 @@
 package schedule.kpi.database.lessons
 
+import org.jetbrains.exposed.sql.Op
+import org.jetbrains.exposed.sql.SqlExpressionBuilder
+
 class LessonDTO (
-    val rowId: String,
     val lesson: String,
     val teacher: String,
-    val time: String
+    val period: String,
+    val link: String
 )

@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
 data class StudyReceiveRemote(
     val lesson: String,
     val teacher: String,
-    val time: String
+    val link: String,
+    val period: String
 )
 
