@@ -1,11 +1,14 @@
 package schedule.kpi.database.lessons
 
-import org.jetbrains.exposed.sql.Op
-import org.jetbrains.exposed.sql.SqlExpressionBuilder
+import kotlinx.serialization.Serializable
 
-class LessonDTO (
+@Serializable
+data class LessonDTO(
     val lesson: String,
     val teacher: String,
-    val period: String,
-    val link: String
+    val period: Int,
+    val link: String,
+    val group: String,
+    val time: Int,
+    val day: Int
 )

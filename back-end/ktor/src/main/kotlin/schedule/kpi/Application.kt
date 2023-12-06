@@ -11,6 +11,7 @@ import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import kotlinx.serialization.modules.SerializersModule
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -22,6 +23,7 @@ import schedule.kpi.plugins.configureDatabases
 import schedule.kpi.plugins.configureRouting
 import schedule.kpi.plugins.configureSecurity
 import schedule.kpi.plugins.configureSerialization
+
 
 
 fun configureDatabase() {
@@ -41,7 +43,13 @@ fun configureDatabase() {
 
 fun Application.configureContentNegotiation() {
     install(ContentNegotiation) {
-        json()
+        json(
+            contentType = ContentType.Application.Json,
+            json = kotlinx.serialization.json.Json {
+                coerceInputValues = true
+                isLenient = true
+            }
+        )
         jackson()
     }
 }

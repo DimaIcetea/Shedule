@@ -8,6 +8,9 @@ data class StudyReceiveRemote(
     val lesson: String,
     val teacher: String,
     val link: String,
-    val period: String
+    val period: Int,
+    val group: String,
+    val time: Int,
+    val day: Int
 )
 
