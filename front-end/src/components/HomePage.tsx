@@ -5,6 +5,7 @@ import { numberToDayUA } from "@/exports/numberToDay";
 import { useState } from "react";
 import groupsJSON from "../content/groups.json";
 import dummyScheduleData from "../content/dummySchedule.json";
+import { indexToLessonTime } from "@/exports/indexToLessonTime";
 
 export default function HomePage() {
   const [isCurrentTabFirst, setIsCurrentTabFirst] = useState(true);
@@ -59,13 +60,24 @@ export default function HomePage() {
                   <p className="schedule-sub-body-cell-headerText">
                     {numberToDayUA(index)}
                   </p>
-                  {data.map((d) => (
-                    <p
-                      className="schedule-sub-body-cell-text"
+                  {data.map((d, i) => (
+                    <div
+                      className="schedule-sub-body-cell-data"
                       key={createKey(16)}
                     >
-                      {d}
-                    </p>
+                      <p className="schedule-sub-body-cell-data-mainText">
+                        <a
+                          className="schedule-sub-body-cell-text-hyperlink"
+                          href={d.link}
+                          target="_blank"
+                        >
+                          {indexToLessonTime(i) + " " + d.subject}
+                        </a>
+                      </p>
+                      <p className="schedule-sub-body-cell-data-subText">
+                        {d.teacher}
+                      </p>
+                    </div>
                   ))}
                 </div>
               ))}
@@ -79,12 +91,18 @@ export default function HomePage() {
                   <p className="schedule-sub-body-cell-headerText">
                     {numberToDayUA(index)}
                   </p>
-                  {data.map((d) => (
+                  {data.map((d, i) => (
                     <p
                       className="schedule-sub-body-cell-text"
                       key={createKey(16)}
                     >
-                      {data}
+                      <a
+                        className="schedule-sub-body-cell-text-hyperlink"
+                        href={d.link}
+                        target="_blank"
+                      >
+                        {indexToLessonTime(i) + " " + d.subject}
+                      </a>
                     </p>
                   ))}
                 </div>

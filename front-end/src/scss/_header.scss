@@ -5,13 +5,21 @@
   &-title {
     display: flex;
     align-items: flex-start;
-    &-image {
-      margin: 1.2rem 0.5rem;
-      filter: invert(100%);
-    }
-    &-heading {
-      font-size: 2.7rem;
-      color: $main-text-color;
+    &-link {
+      display: flex;
+      align-items: flex-start;
+      &-image {
+        margin: 1.2rem 0.5rem;
+        filter: invert(100%);
+      }
+      &-heading {
+        cursor: pointer;
+        font-size: 2.7rem;
+        color: $main-text-color;
+        &:hover {
+          color: $link-color;
+        }
+      }
     }
   }
 
@@ -35,6 +43,10 @@
     flex-direction: row-reverse;
     &-image {
       filter: invert(100%);
+      &:hover {
+        filter: invert(89%) sepia(100%) saturate(2800%) hue-rotate(106deg)
+          brightness(103%) contrast(105%);
+      }
       &-button {
         cursor: pointer;
         &:hover {

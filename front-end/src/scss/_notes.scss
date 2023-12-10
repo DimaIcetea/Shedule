@@ -1,0 +1,75 @@
+.notes {
+  display: flex;
+  justify-content: center;
+
+  &-createNote {
+    background-color: $input-color;
+    padding: 0.3rem 0.5rem;
+    border-radius: 1rem;
+
+    &-button {
+      margin: 0;
+      padding: 0.3rem;
+      border-radius: 1rem;
+      cursor: pointer;
+      &:hover {
+        background-color: #b9b9b9;
+      }
+    }
+
+    &-form {
+      display: flex;
+      flex-direction: column;
+
+      &-button {
+        cursor: pointer;
+        text-align: center;
+        margin: 0 0.2rem;
+        background-color: #fff;
+        &:hover {
+            background-color: $link-color;
+        }
+      }
+
+      &-input, &-textArea {
+        all: unset;
+        margin: 0.3rem;
+        padding: 0.4rem;
+        background-color: #fff;
+      }
+
+      &-textArea {
+        height: 4rem;
+        text-align: start;
+      }
+    }
+  }
+}
+
+.notesList {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 3rem 5%;
+
+    &-note {
+        display: flex;
+        flex-direction: column;
+        background-color: $input-color;
+        margin: 0.5rem;
+        padding: 0.3rem;
+        border-radius: 1rem;
+        width: 18%;
+
+        &-header, &-content {
+            margin: 0.5rem;
+        }
+    
+        &-link {
+            color: #b9b9b9;
+            cursor: pointer;
+            &:hover {
+                color: $link-color;
+            }
+        }
+    }
+}

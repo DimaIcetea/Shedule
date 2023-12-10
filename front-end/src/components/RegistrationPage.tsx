@@ -108,28 +108,28 @@ export default function RegistrationPage() {
             className="registration-form-content-input"
             type="text"
             required
-            placeholder={"Група, прізвище та ім'я"}
+            placeholder={"Група, прізвище та ім'я *"}
           ></input>
 
           <input
             className="registration-form-content-input"
             type="text"
             required
-            placeholder={"Пошта"}
+            placeholder={"Пошта *"}
           ></input>
 
           <input
             className="registration-form-content-input"
             type="password"
             required
-            placeholder={"Пароль"}
+            placeholder={"Пароль *"}
           ></input>
 
           <input
             className="registration-form-content-input"
             type="password"
             required
-            placeholder={"Підтвердіть пароль"}
+            placeholder={"Підтвердіть пароль *"}
           ></input>
 
           <button className="registration-form-content-button" type="submit">

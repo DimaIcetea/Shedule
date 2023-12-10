@@ -8,13 +8,18 @@ import {
   localStorageAPIKeyKey,
   localStorageNameKey,
 } from "@/exports/localStorageKeys";
-import { loginRoute, registerRoute } from "@/exports/appRoutes";
+import {
+  homeRoute,
+  loginRoute,
+  notesRoute,
+  registerRoute,
+} from "@/exports/appRoutes";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const pathName = usePathname();
-  
+
   let apiKey: string | null = "";
   let userName: string | null = "";
   if (typeof window !== "undefined") {
@@ -23,27 +28,31 @@ export default function Header() {
   }
 
   function logoutHandler() {
-    localStorage.clear()
-    window.location.reload()
+    localStorage.clear();
+    window.location.reload();
   }
 
   return (
     <header className="header">
       <div className="header-title">
-        <Image
-          className="header-title-image"
-          src={logo}
-          width={75}
-          height={75}
-          alt="Логотип КПІ"
-        />
-        <h1 className="header-title-heading">Розклад занять</h1>
+        <Link className="header-title-link" href={homeRoute}>
+          <Image
+            className="header-title-link-image"
+            src={logo}
+            width={75}
+            height={75}
+            alt="Логотип КПІ"
+          />
+          <h1 className="header-title-link-heading">Розклад занять</h1>
+        </Link>
       </div>
       <div className="header-notes">
         {apiKey ? (
           <>
             <h3 className="header-notes-text">Редагувати розклад</h3>
-            <h3 className="header-notes-text">Переглянути нотатки</h3>
+            <h3 className="header-notes-text">
+              <Link href={notesRoute}>Переглянути нотатки</Link>
+            </h3>
           </>
         ) : null}
       </div>

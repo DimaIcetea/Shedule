@@ -1,18 +1,271 @@
 {
+  "period": 2,
   "weekOne": [
-    ["ПРЕС КАЧАТ", "БЕЧИТ", "ТУРНИК", "АНЖУМАНИЯ"],
-    ["ПРЕС КАЧАТ", "БЕЧИТ", "ТУРНИК", "АНЖУМАНИЯ"],
-    ["ПРЕС КАЧАТ", "БЕЧИТ", "ТУРНИК", "АНЖУМАНИЯ"],
-    ["ПРЕС КАЧАТ", "БЕЧИТ", "ТУРНИК", "АНЖУМАНИЯ"],
-    ["ПРЕС КАЧАТ", "БЕЧИТ", "ТУРНИК", "АНЖУМАНИЯ"],
-    ["ПРЕС КАЧАТ", "БЕЧИТ", "ТУРНИК", "АНЖУМАНИЯ"]
+    [
+      {
+        "subject": "ПРЕС КАЧАТ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "БЕЧИТ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "ТУРНИК",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "АНЖУМАНИЯ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      }
+    ],
+    [
+      {
+        "subject": "ПРЕС КАЧАТ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "БЕЧИТ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "ТУРНИК",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "АНЖУМАНИЯ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      }
+    ],
+    [
+      {
+        "subject": "ПРЕС КАЧАТ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "БЕЧИТ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "ТУРНИК",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "АНЖУМАНИЯ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      }
+    ],
+    [
+      {
+        "subject": "ПРЕС КАЧАТ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "БЕЧИТ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "ТУРНИК",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "АНЖУМАНИЯ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      }
+    ],
+    [
+      {
+        "subject": "ПРЕС КАЧАТ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "БЕЧИТ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "ТУРНИК",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "АНЖУМАНИЯ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      }
+    ],
+    [
+      {
+        "subject": "ПРЕС КАЧАТ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "БЕЧИТ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "ТУРНИК",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "АНЖУМАНИЯ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      }
+    ]
   ],
   "weekTwo": [
-    ["ПРЕС КАЧАТ", "БЕЧИТ", "ТУРНИК", "АНЖУМАНИЯ"],
-    ["ПРЕС КАЧАТ", "БЕЧИТ", "ТУРНИК", "АНЖУМАНИЯ"],
-    ["ПРЕС КАЧАТ", "БЕЧИТ", "ТУРНИК", "АНЖУМАНИЯ"],
-    ["ПРЕС КАЧАТ", "БЕЧИТ", "ТУРНИК", "АНЖУМАНИЯ"],
-    ["ПРЕС КАЧАТ", "БЕЧИТ", "ТУРНИК", "АНЖУМАНИЯ"],
-    ["ПРЕС КАЧАТ", "БЕЧИТ", "ТУРНИК", "АНЖУМАНИЯ"]
+    [
+      {
+        "subject": "ПРЕС КАЧАТ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "БЕЧИТ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "ТУРНИК",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "АНЖУМАНИЯ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      }
+    ],
+    [
+      {
+        "subject": "ПРЕС КАЧАТ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "БЕЧИТ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "ТУРНИК",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "АНЖУМАНИЯ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      }
+    ],
+    [
+      {
+        "subject": "ПРЕС КАЧАТ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "БЕЧИТ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "ТУРНИК",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "АНЖУМАНИЯ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      }
+    ],
+    [
+      {
+        "subject": "ПРЕС КАЧАТ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "БЕЧИТ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "ТУРНИК",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "АНЖУМАНИЯ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      }
+    ],
+    [
+      {
+        "subject": "ПРЕС КАЧАТ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "БЕЧИТ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "ТУРНИК",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "АНЖУМАНИЯ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      }
+    ],
+    [
+      {
+        "subject": "ПРЕС КАЧАТ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "БЕЧИТ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "ТУРНИК",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      },
+      {
+        "subject": "АНЖУМАНИЯ",
+        "teacher": "ТРЕНИР",
+        "link": "https://www.arknights.global/"
+      }
+    ]
   ]
 }

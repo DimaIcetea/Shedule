@@ -46,14 +46,14 @@ export default function LoginPage() {
             className="registration-form-content-input"
             type="text"
             required
-            placeholder={"Пошта"}
+            placeholder={"Пошта *"}
           ></input>
 
           <input
             className="registration-form-content-input"
             type="password"
             required
-            placeholder={"Пароль"}
+            placeholder={"Пароль *"}
           ></input>
 
           <button className="registration-form-content-button" type="submit">
