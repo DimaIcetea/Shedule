@@ -1,14 +1,18 @@
 "use client";
 
+import { backendURL, defaultHeaders, registrationEndpoint } from "@/exports/appAPIendpoints";
 import { homeRoute } from "@/exports/appRoutes";
 import { createKey } from "@/exports/createKey";
-import { localStorageAPIKeyKey, localStorageNameKey } from "@/exports/localStorageKeys";
+import {
+  localStorageAPIKeyKey,
+  localStorageNameKey,
+} from "@/exports/localStorageKeys";
 import {
   vaildationInitState,
   validationReducer,
 } from "@/exports/registrationPageReducer";
 import { useRouter } from "next/navigation";
-import { FormEvent, useEffect, useReducer } from "react";
+import { FormEvent, useEffect, useReducer, useState } from "react";
 
 const emailRegex =
   /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
@@ -26,8 +30,14 @@ type InputDataType = {
   doesPasswordMatch: boolean;
 };
 
+type ResponseData = {
+  token: string;
+  message: string;
+};
+
 export default function RegistrationPage() {
   const router = useRouter();
+  const [isBEError, setIsBEError] = useState(false);
   const [validationStatus, dispatchValidationStatus] = useReducer(
     validationReducer,
     vaildationInitState
@@ -39,9 +49,10 @@ export default function RegistrationPage() {
     }
   }, []);
 
-  function registrationFormSubmitHandler(e: FormEvent<HTMLFormElement>) {
+  async function registrationFormSubmitHandler(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     dispatchValidationStatus({ type: "reset", payload: true });
+    setIsBEError(false);
     let isCorrectInput = true;
     const data: InputDataType = {
       name: e.target[0].value,
@@ -67,9 +78,25 @@ export default function RegistrationPage() {
       isCorrectInput = false;
     }
     if (isCorrectInput) {
-      localStorage.setItem(localStorageAPIKeyKey, createKey(16));
-      localStorage.setItem(localStorageNameKey, data.name)
-      router.push(homeRoute);
+      const res = await fetch(backendURL + registrationEndpoint.endpoint, {
+        method: registrationEndpoint.method,
+        headers: {
+          ...defaultHeaders,
+        },
+        body: JSON.stringify({
+          login: data.name,
+          email: data.email,
+          password: data.password,
+        }),
+      });
+      if (res.ok) {
+        const json = (await res.json()) as ResponseData;
+        localStorage.setItem(localStorageAPIKeyKey, json.message);
+        localStorage.setItem(localStorageNameKey, data.name);
+        router.push(homeRoute);
+      } else {
+        setIsBEError(true);
+      }
     }
   }
 
@@ -82,6 +109,11 @@ export default function RegistrationPage() {
         <h1 className="registration-form-header">Cтворіть акаунт</h1>
         <div className="registration-form-ruler" />
         <div className="registration-form-content">
+          {isBEError ? (
+            <h3 className="registration-form-content-errorText">
+              Помилка про обробці даних
+            </h3>
+          ) : null}
           {!validationStatus.email ? (
             <h3 className="registration-form-content-errorText">
               Неправильний формат пошти
@@ -92,12 +124,12 @@ export default function RegistrationPage() {
               Неправильний формат ім&apos;я
             </h3>
           ) : null}
-          {!validationStatus.passwordSecure ? (
+          {!validationStatus.passwordMatch ? (
             <h3 className="registration-form-content-errorText">
               Паролі не співпадають
             </h3>
           ) : null}
-          {!validationStatus.passwordMatch ? (
+          {!validationStatus.passwordSecure ? (
             <h3 className="registration-form-content-errorText">
               Пароль повинен мати 8 символів, та 1 цифру, букву та спеціальний
               символ

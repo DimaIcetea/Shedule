@@ -10,7 +10,7 @@ export type VaildataionStateActions = {
   type: "name" | "email" | "passwordSecure" | "passwordMatch" | "reset";
 };
 
-export const vaildationInitState = {
+export const vaildationInitState: InitValidationStateType = {
   name: true,
   email: true,
   passwordSecure: true,

@@ -1,10 +1,18 @@
 "use client";
 
+import {
+  backendURL,
+  createNoteEndpoint,
+  defaultHeaders,
+} from "@/exports/appAPIendpoints";
 import { createKey } from "@/exports/createKey";
+import { indexToLessonType } from "@/exports/indexToLessonType";
 import { FormEvent, useState } from "react";
 
 type NoteData = {
   title: string;
+  lesson: string;
+  type: 1 | 2 | 3;
   link: string;
   content: string;
 };
@@ -13,19 +21,33 @@ export default function NotesPage() {
   const [isCreatingNote, setIsCreatingNote] = useState(false);
   const [currentNotes, setCurrentNotes] = useState<NoteData[]>([]);
 
-  function formSubmitHandler(e: FormEvent<HTMLFormElement>) {
+  async function formSubmitHandler(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data: NoteData = {
       title: e.target[0].value,
-      link: e.target[1].value,
-      content: e.target[2].value,
+      lesson: e.target[1].value,
+      type: +e.target[2].value as 1 | 2 | 3,
+      link: e.target[3].value,
+      content: e.target[4].value,
     };
-    if (data.title && data.content) {
-      setCurrentNotes((prevValue) => {
-        const prev = [...prevValue];
-        prev.push(data);
-        return prev;
+    if (data.title && data.content && data.lesson && data.type) {
+      console.log(data);
+      const res = await fetch(backendURL + createNoteEndpoint.endpoint, {
+        method: createNoteEndpoint.method,
+        headers: {
+          ...defaultHeaders,
+        },
+        body: JSON.stringify(data),
       });
+      if (res.ok) {
+        const json = await res.json();
+        console.log(json);
+      }
+      // setCurrentNotes((prevValue) => {
+      //     const prev = [...prevValue];
+      //     prev.push(data);
+      //     return prev;
+      //   });
       setIsCreatingNote(false);
     }
   }
@@ -52,6 +74,26 @@ export default function NotesPage() {
                   placeholder="Введіть заголовок *"
                   required
                 ></input>
+                <input
+                  className={"notes-createNote-form-input"}
+                  placeholder="Для предмету *"
+                  required
+                ></input>
+                <select
+                  placeholder="Оберіть тип"
+                  className={"notes-createNote-form-select"}
+                >
+                  <option value="" disabled selected>
+                    Оберіть тип уроку
+                  </option>
+                  {[1, 2, 3].map((val) => {
+                    return (
+                      <option value={val} key={val}>
+                        {indexToLessonType(val as 1 | 2 | 3)}
+                      </option>
+                    );
+                  })}
+                </select>
                 <input
                   className={"notes-createNote-form-input"}
                   placeholder="Додадіть посилання"

@@ -1,14 +1,27 @@
 "use client";
 
+import {
+  backendURL,
+  defaultHeaders,
+  loginEndpoint,
+} from "@/exports/appAPIendpoints";
 import { homeRoute } from "@/exports/appRoutes";
 import { createKey } from "@/exports/createKey";
-import { localStorageAPIKeyKey, localStorageNameKey } from "@/exports/localStorageKeys";
+import {
+  localStorageAPIKeyKey,
+  localStorageNameKey,
+} from "@/exports/localStorageKeys";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect } from "react";
 
 type InputDataType = {
-  email: string;
+  name: string;
   password: string;
+};
+
+type ResponseData = {
+  token: string;
+  message: string;
 };
 
 export default function LoginPage() {
@@ -20,16 +33,29 @@ export default function LoginPage() {
     }
   }, []);
 
-  function loginFormSubmitHandler(e: FormEvent<HTMLFormElement>) {
+  async function loginFormSubmitHandler(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data: InputDataType = {
-      email: e.target[0].value,
+      name: e.target[0].value,
       password: e.target[1].value,
     };
-    if (data.email && data.password) {
-      localStorage.setItem(localStorageAPIKeyKey, createKey(16));
-      localStorage.setItem(localStorageNameKey, data.email)
-      router.push(homeRoute);
+    if (data.name && data.password) {
+      const res = await fetch(backendURL + loginEndpoint.endpoint, {
+        method: loginEndpoint.method,
+        headers: {
+          ...defaultHeaders,
+        },
+        body: JSON.stringify({
+          login: data.name,
+          password: data.password,
+        }),
+      });
+      if (res.ok) {
+        const json = await res.json() as ResponseData;
+        localStorage.setItem(localStorageAPIKeyKey, json.token);
+        localStorage.setItem(localStorageNameKey, data.name);
+        router.push(homeRoute);
+      }
     }
   }
 
@@ -46,7 +72,7 @@ export default function LoginPage() {
             className="registration-form-content-input"
             type="text"
             required
-            placeholder={"Пошта *"}
+            placeholder={"Ім'я *"}
           ></input>
 
           <input

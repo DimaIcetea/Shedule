@@ -31,11 +31,15 @@
         }
       }
 
-      &-input, &-textArea {
+      &-input, &-textArea, &-select {
         all: unset;
         margin: 0.3rem;
         padding: 0.4rem;
         background-color: #fff;
+      }
+
+      &-select {
+        cursor: pointer;
       }
 
       &-textArea {
