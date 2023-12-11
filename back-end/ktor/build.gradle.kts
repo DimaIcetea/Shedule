@@ -36,6 +36,7 @@ dependencies {
     implementation("io.ktor:ktor-serialization-jackson-jvm")
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm")
     implementation("io.ktor:ktor-serialization-kotlinx:$ktor_version")
+    implementation("io.ktor:ktor-server-cors:$ktor_version") // Для CORS deeznuts
     implementation("org.postgresql:postgresql:$postgres_version")
     implementation("com.h2database:h2:$h2_version")
 

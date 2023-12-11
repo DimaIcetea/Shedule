@@ -8,6 +8,8 @@ import io.ktor.server.application.*
 import io.ktor.server.cio.*
 import io.ktor.server.engine.*
 import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.plugins.cors.routing.CORS
+import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -55,14 +57,26 @@ fun Application.configureContentNegotiation() {
     }
 }
 
+fun Application.configureCORS() {
+    install(CORS) {
+        allowMethod(HttpMethod.Post)
+        allowMethod(HttpMethod.Patch)
+        allowMethod(HttpMethod.Delete)
+        allowMethod(HttpMethod.Get)
+        allowHeader(HttpHeaders.AccessControlAllowOrigin)
+        allowHeader(HttpHeaders.ContentType)
+        anyHost()
+    }
+}
+
 fun main() {
     configureDatabase()
-    embeddedServer(CIO, port = 8080, host = "0.0.0.0", module = Application::module)
-        .start(wait = true)
+    embeddedServer(CIO, port = 8080, host = "0.0.0.0", module = Application::module).start(wait = true)
 }
 
 fun Application.module() {
     configureContentNegotiation()
+    configureCORS()
     configureRegisterRouting()
     configureLoginRouting()
     configureSerialization()
