@@ -7,6 +7,7 @@ import io.ktor.server.response.*
 import schedule.kpi.database.tokens.TokenDTO
 import schedule.kpi.database.tokens.Tokens
 import schedule.kpi.database.users.Users
+import schedule.kpi.features.register.RegisterResponseModelEXC
 import java.util.*
 
 class LoginController(private val call: ApplicationCall){
@@ -18,7 +19,8 @@ class LoginController(private val call: ApplicationCall){
         val userDTO = Users.fetchUser(receive.login)
 
         if(userDTO == null){
-            call.respond(HttpStatusCode.Unauthorized, "User not found")
+            val responseModel = RegisterResponseModelEXC(message = "User not found")
+            call.respond(HttpStatusCode.Unauthorized, RegisterResponseModelEXC)
         } else {
             if(userDTO.password == receive.password){
                 val token = UUID.randomUUID().toString()
@@ -32,7 +34,8 @@ class LoginController(private val call: ApplicationCall){
                 call.respond(HttpStatusCode.OK, responseModel)
 
             }else {
-                call.respond(HttpStatusCode.BadRequest, "invalid password")
+                val responseModel = RegisterResponseModelEXC(message = "invalid password")
+                call.respond(HttpStatusCode.BadRequest, RegisterResponseModelEXC)
             }
 
         }

@@ -18,26 +18,42 @@ class RegisterController(private val call: ApplicationCall) {
     {
         val registerReceiveRemote = call.receive<RegisterReceiveRemote>()
         if(registerReceiveRemote.email.isValidEmail()){
-            call.respond(HttpStatusCode.BadRequest, message = "Email is not valid")
+            val responseModel = RegisterResponseModelEXC(message = "Email is not valid")
+            call.respond(HttpStatusCode.BadRequest, RegisterResponseModelEXC)
         }
         val userDTO = Users.fetchUser(registerReceiveRemote.login)
 
         if(userDTO != null){
-            call.respond(HttpStatusCode.BadRequest, message = "User already exists")
+            val responseModel = RegisterResponseModelEXC(message = "User already exists")
+            call.respond(HttpStatusCode.BadRequest, RegisterResponseModelEXC)
         }else  {
             val token = UUID.randomUUID().toString()
 
             try {
+                var adminKey = false
+                if (registerReceiveRemote.secret =="KPI"){
+                    adminKey = true
+                }
+                else{
+                    adminKey = false
+                }
                 Users.insert(
                     UserDTO(
                         login = registerReceiveRemote.login,
                         password = registerReceiveRemote.password,
                         email = registerReceiveRemote.email,
-                        username = ""
+                        username = "",
+                        secret = registerReceiveRemote.secret,
+                        admin = adminKey
+
+
+
+
                     )
                 )
             }catch (e: ExposedSQLException){
-                call.respond(HttpStatusCode.BadRequest, "User with this username already exists")
+                val responseModel = RegisterResponseModelEXC(message = "User with this username already exists")
+                call.respond(HttpStatusCode.BadRequest, RegisterResponseModelEXC)
             }
             Tokens.insert(TokenDTO(rowId = UUID.randomUUID().toString(), login = registerReceiveRemote.login,
                 token = token

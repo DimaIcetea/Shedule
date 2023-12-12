@@ -13,6 +13,7 @@ import schedule.kpi.database.lessons.LessonDTO
 import schedule.kpi.database.lessons.Lessons
 import schedule.kpi.database.notes.Notes
 import schedule.kpi.database.notes.NotesDTO
+import schedule.kpi.features.register.RegisterResponseModelEXC
 
 class NotesController(private val call: ApplicationCall) {
 
@@ -34,7 +35,9 @@ class NotesController(private val call: ApplicationCall) {
                 )
             )
         } catch (e: ExposedSQLException) {
-            call.respond(HttpStatusCode.Conflict, message = "Something went wrong")
+            val responseModel = RegisterResponseModelEXC(message = "Something went wrong")
+            call.respond(HttpStatusCode.Conflict, RegisterResponseModelEXC)
         }
-        call.respond(HttpStatusCode.OK, "Added successfully")
+        val responseModel = RegisterResponseModelEXC(message = "Added successfully")
+        call.respond(HttpStatusCode.OK, RegisterResponseModelEXC)
     }}

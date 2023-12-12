@@ -10,6 +10,8 @@ object Users: Table("users") {
     private val password = Users.varchar("password", 25)
     private val username = Users.varchar("username", 30)
     private val email = Users.varchar("email", 25)
+    private val secret = Users.varchar("secret", 10)
+    private val admin = Users.bool("admin").default(false)
 
     fun insert(userDTO: UserDTO) {
         transaction {
@@ -18,6 +20,8 @@ object Users: Table("users") {
                 it[password] = userDTO.password
                 it[username] = userDTO.username
                 it[email] = userDTO.email ?: ""
+                it[secret] = userDTO.secret
+                it[admin] = userDTO.admin
             }
 
         }
@@ -30,7 +34,9 @@ object Users: Table("users") {
                         login = userModel[Users.login],
                         password = userModel[password],
                         email = userModel[email],
-                        username = userModel[username]
+                        username = userModel[username],
+                        secret = userModel[secret],
+                        admin = userModel[admin]
                 )
             }
         } catch (e: Exception) {
