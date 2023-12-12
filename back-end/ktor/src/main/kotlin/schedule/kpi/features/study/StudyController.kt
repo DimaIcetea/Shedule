@@ -11,6 +11,7 @@ import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import schedule.kpi.database.lessons.LessonDTO
 import schedule.kpi.database.lessons.Lessons
+import schedule.kpi.features.register.RegisterResponseModelEXC
 
 class StudyController(private val call: ApplicationCall) {
 
@@ -34,9 +35,11 @@ class StudyController(private val call: ApplicationCall) {
                 )
             )
         } catch (e: ExposedSQLException) {
-            call.respond(HttpStatusCode.Conflict, message = "Something went wrong")
+            val responseModel = RegisterResponseModelEXC(message = "Something went wrong")
+            call.respond(HttpStatusCode.Conflict, RegisterResponseModelEXC)
         }
-        call.respond(HttpStatusCode.OK, "Added successfully")
+        val responseModel = RegisterResponseModelEXC(message = "Added successfully")
+        call.respond(HttpStatusCode.OK, RegisterResponseModelEXC)
     }
     suspend fun updateLesson() {
         val studyReceiveRemote = call.receive<StudyReceiveRemote>()
@@ -58,7 +61,8 @@ class StudyController(private val call: ApplicationCall) {
                 )
             )
         } catch (e: ExposedSQLException) {
-            call.respond(HttpStatusCode.Conflict, message = "Something went wrong")
+            val responseModel = RegisterResponseModelEXC(message = "Something went wrong")
+            call.respond(HttpStatusCode.Conflict, RegisterResponseModelEXC)
         }
     }
 
