@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Montserrat, Comic_Neue } from "next/font/google";
 import "./index.scss";
 import Header from "@/components/Header";
-import { useRouter } from "next/router";
 
 // let font: NextFont;
 // if(Math.random() * 1000 <= 1) font = Comic_Neue({ subsets: ["latin"], weight: "400" });
@@ -24,8 +23,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
-        <Header />
-        {children}
+          <Header />
+          {children}
       </body>
     </html>
   );

@@ -4,10 +4,7 @@ import Image from "next/image";
 import logo from "../images/logo.gif";
 import profilePicture from "../images/profile.png";
 import logoutPicture from "../images/logout.png";
-import {
-  localStorageAPIKeyKey,
-  localStorageNameKey,
-} from "@/exports/localStorageKeys";
+import { apiKeyKey, nameKey } from "@/exports/cookieKeys";
 import {
   homeRoute,
   loginRoute,
@@ -16,6 +13,7 @@ import {
 } from "@/exports/appRoutes";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { CookieService } from "@/exports/cookieService";
 
 export default function Header() {
   const pathName = usePathname();
@@ -23,12 +21,12 @@ export default function Header() {
   let apiKey: string | null = "";
   let userName: string | null = "";
   if (typeof window !== "undefined") {
-    apiKey = window.localStorage.getItem(localStorageAPIKeyKey);
-    userName = window.localStorage.getItem(localStorageNameKey);
+    apiKey = CookieService.getValue(apiKeyKey);
+    userName = CookieService.getValue(nameKey);
   }
 
   function logoutHandler() {
-    localStorage.clear();
+    CookieService.clear();
     window.location.reload();
   }
 

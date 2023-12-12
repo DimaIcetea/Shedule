@@ -6,11 +6,11 @@ import {
   registrationEndpoint,
 } from "@/exports/appAPIendpoints";
 import { homeRoute } from "@/exports/appRoutes";
-import { createKey } from "@/exports/createKey";
+import { CookieService } from "@/exports/cookieService";
 import {
-  localStorageAPIKeyKey,
-  localStorageNameKey,
-} from "@/exports/localStorageKeys";
+  apiKeyKey,
+  nameKey,
+} from "@/exports/cookieKeys";
 import {
   vaildationInitState,
   validationReducer,
@@ -48,7 +48,7 @@ export default function RegistrationPage() {
   );
 
   useEffect(() => {
-    if (localStorage.getItem(localStorageAPIKeyKey)) {
+    if (CookieService.getValue(apiKeyKey)) {
       router.push(homeRoute);
     }
   }, []);
@@ -98,8 +98,8 @@ export default function RegistrationPage() {
       });
       if (res.ok) {
         const json = (await res.json()) as ResponseData;
-        localStorage.setItem(localStorageAPIKeyKey, json.message);
-        localStorage.setItem(localStorageNameKey, data.name);
+        CookieService.setValue(apiKeyKey, json.token);
+        CookieService.setValue(nameKey, data.name);
         router.push(homeRoute);
       } else {
         setIsBEError(true);

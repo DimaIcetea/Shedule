@@ -4,10 +4,12 @@ import {
   backendURL,
   createNoteEndpoint,
   defaultHeaders,
+  getNotes,
 } from "@/exports/appAPIendpoints";
 import { createKey } from "@/exports/createKey";
 import { indexToLessonType } from "@/exports/indexToLessonType";
-import { FormEvent, useState } from "react";
+import { useQuery } from "@/exports/useQuery";
+import { FormEvent, useEffect, useState } from "react";
 
 type NoteData = {
   title: string;
@@ -21,14 +23,18 @@ export default function NotesPage() {
   const [isCreatingNote, setIsCreatingNote] = useState(false);
   const [currentNotes, setCurrentNotes] = useState<NoteData[]>([]);
 
+  const { data } = useQuery(() => getNotes(1), ["get notes", 1]);
+
+  console.log(data);
+
   async function formSubmitHandler(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const target = e.target as HTMLFormElement 
+    const target = e.target as HTMLFormElement;
     const data: NoteData = {
       title: (target[0] as HTMLInputElement).value,
       lesson: (target[1] as HTMLInputElement).value,
       type: +(target[2] as HTMLSelectElement).value as 1 | 2 | 3,
-      link:(target[3] as HTMLInputElement).value,
+      link: (target[3] as HTMLInputElement).value,
       content: (target[4] as HTMLTextAreaElement).value,
     };
     if (data.title && data.content && data.lesson && data.type) {
@@ -44,11 +50,6 @@ export default function NotesPage() {
         const json = await res.json();
         console.log(json);
       }
-      // setCurrentNotes((prevValue) => {
-      //     const prev = [...prevValue];
-      //     prev.push(data);
-      //     return prev;
-      //   });
       setIsCreatingNote(false);
     }
   }

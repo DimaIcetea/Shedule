@@ -6,11 +6,11 @@ import {
   loginEndpoint,
 } from "@/exports/appAPIendpoints";
 import { homeRoute } from "@/exports/appRoutes";
-import { createKey } from "@/exports/createKey";
+import { CookieService } from "@/exports/cookieService";
 import {
-  localStorageAPIKeyKey,
-  localStorageNameKey,
-} from "@/exports/localStorageKeys";
+  apiKeyKey,
+  nameKey,
+} from "@/exports/cookieKeys";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect } from "react";
 
@@ -28,7 +28,7 @@ export default function LoginPage() {
   const router = useRouter();
 
   useEffect(() => {
-    if (localStorage.getItem(localStorageAPIKeyKey)) {
+    if (CookieService.getValue(apiKeyKey)) {
       router.push(homeRoute);
     }
   }, []);
@@ -53,8 +53,8 @@ export default function LoginPage() {
       });
       if (res.ok) {
         const json = (await res.json()) as ResponseData;
-        localStorage.setItem(localStorageAPIKeyKey, json.token);
-        localStorage.setItem(localStorageNameKey, data.name);
+        CookieService.setValue(apiKeyKey, json.token);
+        CookieService.setValue(nameKey, data.name);
         router.push(homeRoute);
       }
     }
