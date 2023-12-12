@@ -35,9 +35,10 @@ export default function LoginPage() {
 
   async function loginFormSubmitHandler(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const target = e.target as HTMLFormElement;
     const data: InputDataType = {
-      name: e.target[0].value,
-      password: e.target[1].value,
+      name: (target[0] as HTMLInputElement).value,
+      password: (target[1] as HTMLInputElement).value,
     };
     if (data.name && data.password) {
       const res = await fetch(backendURL + loginEndpoint.endpoint, {
@@ -51,7 +52,7 @@ export default function LoginPage() {
         }),
       });
       if (res.ok) {
-        const json = await res.json() as ResponseData;
+        const json = (await res.json()) as ResponseData;
         localStorage.setItem(localStorageAPIKeyKey, json.token);
         localStorage.setItem(localStorageNameKey, data.name);
         router.push(homeRoute);

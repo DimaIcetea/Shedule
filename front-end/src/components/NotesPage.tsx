@@ -23,12 +23,13 @@ export default function NotesPage() {
 
   async function formSubmitHandler(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const target = e.target as HTMLFormElement 
     const data: NoteData = {
-      title: e.target[0].value,
-      lesson: e.target[1].value,
-      type: +e.target[2].value as 1 | 2 | 3,
-      link: e.target[3].value,
-      content: e.target[4].value,
+      title: (target[0] as HTMLInputElement).value,
+      lesson: (target[1] as HTMLInputElement).value,
+      type: +(target[2] as HTMLSelectElement).value as 1 | 2 | 3,
+      link:(target[3] as HTMLInputElement).value,
+      content: (target[4] as HTMLTextAreaElement).value,
     };
     if (data.title && data.content && data.lesson && data.type) {
       console.log(data);

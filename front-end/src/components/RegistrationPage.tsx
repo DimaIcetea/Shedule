@@ -1,6 +1,10 @@
 "use client";
 
-import { backendURL, defaultHeaders, registrationEndpoint } from "@/exports/appAPIendpoints";
+import {
+  backendURL,
+  defaultHeaders,
+  registrationEndpoint,
+} from "@/exports/appAPIendpoints";
 import { homeRoute } from "@/exports/appRoutes";
 import { createKey } from "@/exports/createKey";
 import {
@@ -54,11 +58,14 @@ export default function RegistrationPage() {
     dispatchValidationStatus({ type: "reset", payload: true });
     setIsBEError(false);
     let isCorrectInput = true;
+    const target = e.target as HTMLFormElement;
     const data: InputDataType = {
-      name: e.target[0].value,
-      email: e.target[1].value,
-      password: e.target[2].value,
-      doesPasswordMatch: e.target[2].value === e.target[3].value,
+      name: (target[0] as HTMLInputElement).value,
+      email: (target[1] as HTMLInputElement).value,
+      password: (target[2] as HTMLInputElement).value,
+      doesPasswordMatch:
+        (target[2] as HTMLInputElement).value ===
+        (target[3] as HTMLInputElement).value,
     };
     const nameElements = data.name.split(" ");
     if (!(nameElements.length === 3 && groupRegex.test(nameElements[0]))) {
