@@ -31,11 +31,10 @@ class RegisterController(private val call: ApplicationCall) {
 
             try {
                 var adminKey = false
-                if (registerReceiveRemote.secret =="KPI"){
-                    adminKey = true
-                }
-                else{
-                    adminKey = false
+                adminKey = if (registerReceiveRemote.secret =="KPI"){
+                    true
+                } else{
+                    false
                 }
                 Users.insert(
                     UserDTO(
