@@ -12,7 +12,17 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import schedule.kpi.database.lessons.LessonDTO
 import schedule.kpi.database.lessons.Lessons
+import com.auth0.jwt.JWT
+import com.auth0.jwt.exceptions.JWTDecodeException
+import com.auth0.jwt.interfaces.DecodedJWT
 
+fun decodeToken(token: String): DecodedJWT? {
+    try {
+        return JWT.decode(token)
+    } catch (e: JWTDecodeException) {
+        return null
+    }
+}
 fun Application.configureStudyRouting() {
     routing {
         post("/study") {
@@ -29,15 +39,33 @@ fun Application.configureStudyRouting() {
             }
         }
         patch("/study/{id}"){
-            val itemId = call.parameters["id"]?.toIntOrNull()
-            if (itemId != null) {
-                val studyController = StudyController(call)
-                studyController.updateLesson()
-                transaction { Lessons.deleteWhere { Lessons.id eq itemId } }
-                call.respond(HttpStatusCode.OK)
-            } else {
-                call.respond(HttpStatusCode.BadRequest, "Invalid id format")
+            val userToken = call.request.headers["Authorization"] // Получаем токен из заголовков
+
+
+            if (userToken.isNullOrEmpty()) {
+                call.respond(HttpStatusCode.Unauthorized, "Authorization token is missing")
+                return@patch
             }
+
+
+            val decodedToken = decodeToken(userToken)
+
+
+            if (decodedToken?.getClaim("isAdmin")?.asBoolean() == true) {
+
+                val itemId = call.parameters["id"]?.toIntOrNull()
+                if (itemId != null) {
+                    val studyController = StudyController(call)
+                    studyController.updateLesson()
+                    transaction { Lessons.deleteWhere { Lessons.id eq itemId } }
+                    call.respond(HttpStatusCode.OK)
+                } else {
+                    call.respond(HttpStatusCode.BadRequest, "Invalid id format")
+                }
+            } else {
+                call.respond(HttpStatusCode.Forbidden, "Access denied. Admin rights required.")
+            }
+
         }
         get("/study/lessonsByGroup") {
             val groupParam = call.parameters["group"] ?: return@get call.respond(HttpStatusCode.BadRequest, "Group parameter is missing")

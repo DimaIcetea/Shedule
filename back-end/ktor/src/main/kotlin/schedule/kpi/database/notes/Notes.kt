@@ -12,6 +12,7 @@ object Notes: IntIdTable() {
     internal val link = Notes.varchar("link", 128)
     internal val content = Notes.varchar("content", 256)
     internal val type = Notes.integer("type")
+    internal val login = Notes.varchar("login", 25)
 
 
     fun insert(notesDTO: NotesDTO){
@@ -22,6 +23,8 @@ object Notes: IntIdTable() {
                 it[link] = notesDTO.link
                 it[content] = notesDTO.content
                 it[type]=notesDTO.type
+                it[login]=notesDTO.login
+
             }
 
         }

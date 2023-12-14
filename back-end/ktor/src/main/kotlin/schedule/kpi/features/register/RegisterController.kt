@@ -31,11 +31,10 @@ class RegisterController(private val call: ApplicationCall) {
 
             try {
                 var adminKey = false
-                if (registerReceiveRemote.secret =="KPI"){
-                    adminKey = true
-                }
-                else{
-                    adminKey = false
+                adminKey = if (registerReceiveRemote.secret =="KPI"){
+                    true
+                } else{
+                    false
                 }
                 Users.insert(
                     UserDTO(
@@ -60,7 +59,10 @@ class RegisterController(private val call: ApplicationCall) {
             )
 
             )
-            val responseModel = RegisterResponseModel(token = token, message = "User registered successfully")
+            val responseModel = RegisterResponseModel(
+                login = registerReceiveRemote.login,
+                message = "User registered successfully"
+            )
             call.respond(HttpStatusCode.Created, responseModel)
 
         }

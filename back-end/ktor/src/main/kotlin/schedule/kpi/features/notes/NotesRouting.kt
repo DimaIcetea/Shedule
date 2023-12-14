@@ -1,18 +1,14 @@
 package schedule.kpi.features.notes
-import schedule.kpi.features.notes.NotesController
 import io.ktor.http.*
 import io.ktor.server.application.*
-import io.ktor.server.plugins.*
-import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
-import schedule.kpi.database.lessons.LessonDTO
-import schedule.kpi.database.lessons.Lessons
 import schedule.kpi.database.notes.Notes
 import schedule.kpi.database.notes.NotesDTO
+import schedule.kpi.database.users.Users
 
 fun Application.configureNotesRouting() {
     this.routing {
@@ -30,14 +26,60 @@ fun Application.configureNotesRouting() {
             }
 
         }
+        get("/note/{login}") {
+            val groupParam = call.parameters["login"] ?: return@get call.respond(
+                HttpStatusCode.BadRequest,
+                "Type parameter is missing"
+            )
+
+
+            val isLoginValid = transaction {
+                Notes.select { Notes.login eq groupParam }
+                    .singleOrNull() != null
+            }
+
+            if (!isLoginValid) {
+                return@get call.respond(
+                    HttpStatusCode.BadRequest,
+                    "Invalid login"
+                )
+            }
+
+
+            val notesForGroup = transaction {
+                Notes.select { Notes.login eq groupParam }
+                    .orderBy(Notes.id, SortOrder.ASC)
+                    .map {
+                        NotesDTO(
+                            title = it[Notes.title],
+                            lesson = it[Notes.lesson],
+                            link = it[Notes.link],
+                            content = it[Notes.content],
+                            type = it[Notes.type],
+                            login = it[Notes.login]
+                        )
+                    }
+            }
+
+
+            call.respond(notesForGroup)
+
+
+
+            if (notesForGroup.isNotEmpty()) {
+                call.respond(HttpStatusCode.OK, notesForGroup)
+            } else {
+                call.respond(HttpStatusCode.NotFound, "No types found for the specified group")
+            }
+        }
         get("/note/notesByType") {
-            val groupParam = call.parameters["title"] ?: return@get call.respond(
+            val groupParam = call.parameters["type"]?.toIntOrNull() ?: return@get call.respond(
                 HttpStatusCode.BadRequest,
                 "Type parameter is missing"
             )
 
             val notesForGroup = transaction {
-                Notes.select { Notes.title eq groupParam }
+                Notes.select { Notes.type eq groupParam }
                     .orderBy(Notes.type, SortOrder.ASC)
                     .map {
                         NotesDTO(
@@ -45,15 +87,10 @@ fun Application.configureNotesRouting() {
                             lesson = it[Notes.lesson],
                             link = it[Notes.link],
                             content = it[Notes.content],
-                            type = it[Notes.type]
+                            type = it[Notes.type],
+                            login = it[Notes.login]
                         )
                     }
-            }
-
-            if (notesForGroup.isNotEmpty()) {
-                call.respond(HttpStatusCode.OK, notesForGroup)
-            } else {
-                call.respond(HttpStatusCode.NotFound, "No types found for the specified group")
             }
         }
     }

@@ -9,5 +9,6 @@ data class NotesReceiveRemote(
     val link: String,
     val content: String,
     val lesson: String,
-    val type: Int
+    val type: Int,
+    val login: String
 )

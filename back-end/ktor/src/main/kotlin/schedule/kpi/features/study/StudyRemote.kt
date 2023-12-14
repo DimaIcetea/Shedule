@@ -14,3 +14,8 @@ data class StudyReceiveRemote(
     val day: Int
 )
 
+@Serializable
+data class isAdminReceiveRemote(
+    val admin: Boolean
+)
+
