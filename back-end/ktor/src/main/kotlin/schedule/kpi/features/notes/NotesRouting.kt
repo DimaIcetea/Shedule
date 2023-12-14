@@ -8,6 +8,7 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import schedule.kpi.database.notes.Notes
 import schedule.kpi.database.notes.NotesDTO
+import schedule.kpi.database.users.Users
 
 fun Application.configureNotesRouting() {
     this.routing {
@@ -31,6 +32,20 @@ fun Application.configureNotesRouting() {
                 "Type parameter is missing"
             )
 
+
+            val isLoginValid = transaction {
+                Notes.select { Notes.login eq groupParam }
+                    .singleOrNull() != null
+            }
+
+            if (!isLoginValid) {
+                return@get call.respond(
+                    HttpStatusCode.BadRequest,
+                    "Invalid login"
+                )
+            }
+
+
             val notesForGroup = transaction {
                 Notes.select { Notes.login eq groupParam }
                     .orderBy(Notes.id, SortOrder.ASC)
@@ -42,10 +57,14 @@ fun Application.configureNotesRouting() {
                             content = it[Notes.content],
                             type = it[Notes.type],
                             login = it[Notes.login]
-
                         )
                     }
             }
+
+
+            call.respond(notesForGroup)
+
+
 
             if (notesForGroup.isNotEmpty()) {
                 call.respond(HttpStatusCode.OK, notesForGroup)
