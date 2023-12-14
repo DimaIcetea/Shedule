@@ -59,7 +59,10 @@ class RegisterController(private val call: ApplicationCall) {
             )
 
             )
-            val responseModel = RegisterResponseModel(token = token, message = "User registered successfully")
+            val responseModel = RegisterResponseModel(
+                login = registerReceiveRemote.login,
+                message = "User registered successfully"
+            )
             call.respond(HttpStatusCode.Created, responseModel)
 
         }
