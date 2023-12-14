@@ -6,6 +6,7 @@ import profilePicture from "../images/profile.png";
 import logoutPicture from "../images/logout.png";
 import { apiKeyKey, nameKey } from "@/exports/cookieKeys";
 import {
+  changeScheduleRoute,
   homeRoute,
   loginRoute,
   notesRoute,
@@ -18,16 +19,16 @@ import { CookieService } from "@/exports/cookieService";
 export default function Header() {
   const pathName = usePathname();
 
-  let apiKey: string | null = "";
-  let userName: string | null = "";
+  let apiKey: string | undefined = "";
   if (typeof window !== "undefined") {
     apiKey = CookieService.getValue(apiKeyKey);
-    userName = CookieService.getValue(nameKey);
   }
 
   function logoutHandler() {
     CookieService.clear();
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 50);
   }
 
   return (
@@ -47,7 +48,9 @@ export default function Header() {
       <div className="header-notes">
         {apiKey ? (
           <>
-            <h3 className="header-notes-text">Редагувати розклад</h3>
+            <h3 className="header-notes-text">
+              <Link href={changeScheduleRoute}>Редагувати розклад</Link>
+            </h3>
             <h3 className="header-notes-text">
               <Link href={notesRoute}>Переглянути нотатки</Link>
             </h3>
@@ -73,7 +76,9 @@ export default function Header() {
               alt="Профіль користувача"
             />
             <div className="header-auth-name">
-              <h3 className="header-auth-name-text">{userName}</h3>
+              <h3 className="header-auth-name-text">
+                {CookieService.getValue(nameKey)}
+              </h3>
             </div>
           </>
         ) : (

@@ -7,10 +7,7 @@ import {
 } from "@/exports/appAPIendpoints";
 import { homeRoute } from "@/exports/appRoutes";
 import { CookieService } from "@/exports/cookieService";
-import {
-  apiKeyKey,
-  nameKey,
-} from "@/exports/cookieKeys";
+import { apiKeyKey, nameKey } from "@/exports/cookieKeys";
 import {
   vaildationInitState,
   validationReducer,
@@ -32,6 +29,7 @@ type InputDataType = {
   email: string;
   password: string;
   doesPasswordMatch: boolean;
+  secret: string;
 };
 
 type ResponseData = {
@@ -46,6 +44,8 @@ export default function RegistrationPage() {
     validationReducer,
     vaildationInitState
   );
+
+    console.log(CookieService.getValue(apiKeyKey))
 
   useEffect(() => {
     if (CookieService.getValue(apiKeyKey)) {
@@ -66,6 +66,7 @@ export default function RegistrationPage() {
       doesPasswordMatch:
         (target[2] as HTMLInputElement).value ===
         (target[3] as HTMLInputElement).value,
+      secret: (target[4] as HTMLInputElement).value,
     };
     const nameElements = data.name.split(" ");
     if (!(nameElements.length === 3 && groupRegex.test(nameElements[0]))) {
@@ -94,6 +95,7 @@ export default function RegistrationPage() {
           login: data.name,
           email: data.email,
           password: data.password,
+          secret: data.secret,
         }),
       });
       if (res.ok) {
@@ -169,6 +171,12 @@ export default function RegistrationPage() {
             type="password"
             required
             placeholder={"Підтвердіть пароль *"}
+          ></input>
+
+          <input
+            className="registration-form-content-input"
+            type="password"
+            placeholder={"Код адміністратора"}
           ></input>
 
           <button className="registration-form-content-button" type="submit">

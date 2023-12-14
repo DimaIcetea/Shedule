@@ -2,13 +2,39 @@
 
 import { createKey } from "@/exports/createKey";
 import { numberToDayUA } from "@/exports/numberToDay";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import groupsJSON from "../content/groups.json";
-import dummyScheduleData from "../content/dummySchedule.json";
 import { indexToLessonTime } from "@/exports/indexToLessonTime";
+import { useQuery } from "@/exports/useQuery";
+import { ScheduleResponseType, getSchedule } from "@/exports/appAPIendpoints";
+import { indexToWord } from "@/exports/indexToWord";
+import { transformScheduleData } from "@/exports/transformScheduleData";
 
 export default function HomePage() {
-  const [isCurrentTabFirst, setIsCurrentTabFirst] = useState(true);
+  const [currentTab, setCurrentTab] = useState(1);
+  const [periods, setPeriods] = useState<number>(0);
+  const [selectedGroup, setSelectedGroup] = useState<string>("АА-31");
+  const [transformedData, setTransformedData] =
+    useState<ScheduleResponseType[][][]>();
+
+  const { data, isLoading } = useQuery(
+    () => getSchedule(selectedGroup.split(" ")[0]),
+    [selectedGroup]
+  );
+
+  useEffect(() => {
+    if (data) {
+      const { array: newData, numberOfPeriods } = transformScheduleData(data);
+      console.log(
+        "pizdec",
+        newData,
+        numberOfPeriods,
+        Array(numberOfPeriods).fill(1)
+      );
+      setPeriods(numberOfPeriods);
+      setTransformedData(newData);
+    }
+  }, [isLoading]);
 
   return (
     <>
@@ -17,7 +43,8 @@ export default function HomePage() {
           <h3 className="groupSelector-content-text">Показати розклад для</h3>
           <select
             className="groupSelector-content-select"
-            onChange={(e) => console.log(e.target.value)}
+            value={selectedGroup}
+            onChange={(e) => setSelectedGroup(e.target.value)}
           >
             {groupsJSON.groups.map((group) => (
               <option key={createKey(16)} value={group}>
@@ -29,87 +56,81 @@ export default function HomePage() {
       </div>
       <div className="contentSwitcher">
         <div className="contentSwitcher-content">
-          <div
-            className={`contentSwitcher-content-option ${
-              isCurrentTabFirst ? "contentSwitcher-content-option-active" : ""
-            }`}
-            onClick={() => setIsCurrentTabFirst(true)}
-          >
-            <h3 className="contentSwitcher-content-option-text">
-              Перший тиждень
-            </h3>
-          </div>
-          <div
-            className={`contentSwitcher-content-option ${
-              !isCurrentTabFirst ? "contentSwitcher-content-option-active" : ""
-            }`}
-            onClick={() => setIsCurrentTabFirst(false)}
-          >
-            <h3 className="contentSwitcher-content-option-text">
-              Другий тиждень
-            </h3>
-          </div>
+          {Array(periods).fill(1).length !== 0 ? (
+            Array(periods)
+              .fill(1)
+              .map((_, index) => (
+                <div
+                  key={index}
+                  className={`contentSwitcher-content-option ${
+                    currentTab === index
+                      ? "contentSwitcher-content-option-active"
+                      : ""
+                  }`}
+                  onClick={() => setCurrentTab(index)}
+                >
+                  <h3 className="contentSwitcher-content-option-text">
+                    {indexToWord((index + 1) as 1 | 2 | 3 | 4) + " тиждень"}
+                  </h3>
+                </div>
+              ))
+          ) : (
+            <div className={`contentSwitcher-content-noData`}>
+              <h3 className="contentSwitcher-content-noData-text">
+                Немає даних
+              </h3>
+            </div>
+          )}
         </div>
       </div>
       <div className="schedule">
-        {isCurrentTabFirst ? (
-          <div className="schedule-sub">
-            <div className="schedule-sub-body">
-              {dummyScheduleData.weekOne.map((data, index) => (
-                <div key={createKey(16)} className="schedule-sub-body-cell">
-                  <p className="schedule-sub-body-cell-headerText">
-                    {numberToDayUA(index)}
-                  </p>
-                  {data.map((d, i) => (
-                    <div
-                      className="schedule-sub-body-cell-data"
-                      key={createKey(16)}
-                    >
-                      <p className="schedule-sub-body-cell-data-mainText">
-                        <a
-                          className="schedule-sub-body-cell-text-hyperlink"
-                          href={d.link}
-                          target="_blank"
+        {Array(periods).fill(1).length !== 0
+          ? Array(periods)
+              .fill(1)
+              .map((_, index) => {
+                return currentTab === index ? (
+                  <div className="schedule-sub">
+                    <div className="schedule-sub-body">
+                      {transformedData![currentTab].map((data, index) => (
+                        <div
+                          key={createKey(16)}
+                          className="schedule-sub-body-cell"
                         >
-                          {indexToLessonTime(i) + " " + d.subject}
-                        </a>
-                      </p>
-                      <p className="schedule-sub-body-cell-data-subText">
-                        {d.teacher}
-                      </p>
+                          <p className="schedule-sub-body-cell-headerText">
+                            {numberToDayUA(index)}
+                          </p>
+                          {data.map((d, i) => (
+                            <div
+                              className="schedule-sub-body-cell-data"
+                              key={createKey(16)}
+                            >
+                              <p className="schedule-sub-body-cell-data-mainText">
+                                <a
+                                  className={`${
+                                    d.link !== ""
+                                      ? "schedule-sub-body-cell-text-hyperlink"
+                                      : "schedule-sub-body-cell-text-disabled"
+                                  }`}
+                                  href={d.link}
+                                  target="_blank"
+                                >
+                                  {indexToLessonTime(i) +
+                                    " " +
+                                    (d.lesson !== "" ? d.lesson : "Немає пари")}
+                                </a>
+                              </p>
+                              <p className="schedule-sub-body-cell-data-subText">
+                                {d.teacher}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div className="schedule-sub">
-            <div className="schedule-sub-body">
-              {dummyScheduleData.weekTwo.map((data, index) => (
-                <div key={createKey(16)} className="schedule-sub-body-cell">
-                  <p className="schedule-sub-body-cell-headerText">
-                    {numberToDayUA(index)}
-                  </p>
-                  {data.map((d, i) => (
-                    <p
-                      className="schedule-sub-body-cell-text"
-                      key={createKey(16)}
-                    >
-                      <a
-                        className="schedule-sub-body-cell-text-hyperlink"
-                        href={d.link}
-                        target="_blank"
-                      >
-                        {indexToLessonTime(i) + " " + d.subject}
-                      </a>
-                    </p>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+                  </div>
+                ) : null;
+              })
+          : null}
       </div>
     </>
   );

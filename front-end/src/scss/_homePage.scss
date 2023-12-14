@@ -31,6 +31,14 @@
     border-radius: 1rem;
     padding: 0 0.5rem;
 
+    &-noData {
+      margin: 0.1rem;
+
+      &-text {
+        margin: 0.5rem 0.2rem;
+      }
+    }
+
     &-option {
       margin: 0.1rem;
       cursor: pointer;
@@ -86,6 +94,9 @@
               text-decoration: underline;
             }
           }
+          &-disabled {
+            color: #797979;
+          }
         }
 
         &-headerText {
@@ -99,6 +110,7 @@
           flex-direction: column;
           align-items: center;
           color: black;
+          min-height: 2rem;
           margin: 0.5rem 0;
 
           &-subText {

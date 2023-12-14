@@ -8,8 +8,10 @@ export function useQuery<T>(
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setData(undefined);
     setIsLoading(true);
     queryFunction().then((data) => {
+      console.log(data);
       setData(data);
       setIsLoading(false);
     });
