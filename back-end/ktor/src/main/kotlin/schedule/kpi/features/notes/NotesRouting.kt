@@ -9,6 +9,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import schedule.kpi.database.notes.Notes
 import schedule.kpi.database.notes.NotesDTO
 import schedule.kpi.database.users.Users
+import schedule.kpi.features.study.decodeToken
 
 fun Application.configureNotesRouting() {
     this.routing {
@@ -17,6 +18,19 @@ fun Application.configureNotesRouting() {
             notesController.registerNewNote()
         }
         delete("/note/{id}") {
+            this@routing.intercept(ApplicationCallPipeline.Features) {
+                val userToken = call.request.headers["Authorization"]
+                if (userToken.isNullOrEmpty()) {
+                    call.respond(HttpStatusCode.Unauthorized, "Authorization token is missing")
+                    return@intercept finish()
+                }
+
+                val decodedToken = decodeToken(userToken)
+                if (decodedToken?.getClaim("admin")?.asBoolean() != true) {
+                    call.respond(HttpStatusCode.Forbidden, "Access denied. Admin privileges required.")
+                    return@intercept finish()
+                }
+            }
             val itemId = call.parameters["id"]?.toIntOrNull()
             if (itemId != null) {
                 transaction { Notes.deleteWhere { Notes.id eq itemId } }
