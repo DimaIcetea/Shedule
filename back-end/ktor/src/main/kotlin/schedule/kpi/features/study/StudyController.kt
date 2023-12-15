@@ -36,10 +36,10 @@ class StudyController(private val call: ApplicationCall) {
             )
         } catch (e: ExposedSQLException) {
             val responseModel = RegisterResponseModelEXC(message = "Something went wrong")
-            call.respond(HttpStatusCode.Conflict, RegisterResponseModelEXC)
+            call.respond(HttpStatusCode.Conflict, responseModel)
         }
         val responseModel = RegisterResponseModelEXC(message = "Added successfully")
-        call.respond(HttpStatusCode.OK, RegisterResponseModelEXC)
+        call.respond(HttpStatusCode.OK, responseModel)
     }
     suspend fun updateLesson() {
         val studyReceiveRemote = call.receive<StudyReceiveRemote>()
@@ -62,7 +62,7 @@ class StudyController(private val call: ApplicationCall) {
             )
         } catch (e: ExposedSQLException) {
             val responseModel = RegisterResponseModelEXC(message = "Something went wrong")
-            call.respond(HttpStatusCode.Conflict, RegisterResponseModelEXC)
+            call.respond(HttpStatusCode.Conflict, responseModel)
         }
     }
 

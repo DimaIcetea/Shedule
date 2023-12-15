@@ -15,10 +15,8 @@ data class RegisterReceiveRemote(
 data class RegisterResponseModel(
     val login: String,
     val message: String
-
 )
 @Serializable
 data class RegisterResponseModelEXC(
     val message: String
-
 )
