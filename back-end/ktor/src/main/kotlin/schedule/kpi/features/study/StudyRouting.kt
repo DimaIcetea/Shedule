@@ -30,6 +30,19 @@ fun Application.configureStudyRouting() {
             studyController.registerNewLesson()
         }
         delete("/study/{id}"){
+            this@routing.intercept(ApplicationCallPipeline.Features) {
+                val userToken = call.request.headers["Authorization"]
+                if (userToken.isNullOrEmpty()) {
+                    call.respond(HttpStatusCode.Unauthorized, "Authorization token is missing")
+                    return@intercept finish()
+                }
+
+                val decodedToken = decodeToken(userToken)
+                if (decodedToken?.getClaim("admin")?.asBoolean() != true) {
+                    call.respond(HttpStatusCode.Forbidden, "Access denied. Admin privileges required.")
+                    return@intercept finish()
+                }
+            }
             val itemId = call.parameters["id"]?.toIntOrNull()
             if (itemId != null) {
                 transaction { Lessons.deleteWhere { Lessons.id eq itemId } }
@@ -39,6 +52,19 @@ fun Application.configureStudyRouting() {
             }
         }
         patch("/study/{id}"){
+            this@routing.intercept(ApplicationCallPipeline.Features) {
+                val userToken = call.request.headers["Authorization"]
+                if (userToken.isNullOrEmpty()) {
+                    call.respond(HttpStatusCode.Unauthorized, "Authorization token is missing")
+                    return@intercept finish()
+                }
+
+                val decodedToken = decodeToken(userToken)
+                if (decodedToken?.getClaim("admin")?.asBoolean() != true) {
+                    call.respond(HttpStatusCode.Forbidden, "Access denied. Admin privileges required.")
+                    return@intercept finish()
+                }
+            }
             val userToken = call.request.headers["Authorization"] // Получаем токен из заголовков
 
 
@@ -51,7 +77,7 @@ fun Application.configureStudyRouting() {
             val decodedToken = decodeToken(userToken)
 
 
-            if (decodedToken?.getClaim("isAdmin")?.asBoolean() == true) {
+            if (decodedToken?.getClaim("admin")?.asBoolean() == true) {
 
                 val itemId = call.parameters["id"]?.toIntOrNull()
                 if (itemId != null) {

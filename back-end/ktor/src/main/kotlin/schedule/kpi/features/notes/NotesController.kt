@@ -26,7 +26,7 @@ class NotesController(private val call: ApplicationCall) {
                     type = notesReceiveRemote.type,
                     link = notesReceiveRemote.link,
                     content = notesReceiveRemote.content,
-                    login =  notesReceiveRemote.login
+                    login = notesReceiveRemote.login
                 )
             )
         } catch (e: ExposedSQLException) {
