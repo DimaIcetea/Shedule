@@ -6,6 +6,8 @@ import {
   defaultHeaders,
   getNotes,
 } from "@/exports/appAPIendpoints";
+import { nameKey } from "@/exports/cookieKeys";
+import { CookieService } from "@/exports/cookieService";
 import { createKey } from "@/exports/createKey";
 import { indexToLessonType } from "@/exports/indexToLessonType";
 import { useQuery } from "@/exports/useQuery";
@@ -23,7 +25,14 @@ export default function NotesPage() {
   const [isCreatingNote, setIsCreatingNote] = useState(false);
   const [currentNotes, setCurrentNotes] = useState<NoteData[]>([]);
 
-  const { data } = useQuery(() => getNotes(1), ["get notes", 1]);
+  const { data, isLoading } = useQuery(
+    () => getNotes(CookieService.getValue(nameKey)!),
+    ["get notes", CookieService.getValue(nameKey)!, "" + isCreatingNote]
+  );
+
+  useEffect(() => {
+    if (data) setCurrentNotes(data);
+  }, [isLoading]);
 
   console.log(data);
 
@@ -38,21 +47,25 @@ export default function NotesPage() {
       content: (target[4] as HTMLTextAreaElement).value,
     };
     if (data.title && data.content && data.lesson && data.type) {
-      console.log(data);
       const res = await fetch(backendURL + createNoteEndpoint.endpoint, {
         method: createNoteEndpoint.method,
         headers: {
           ...defaultHeaders,
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          login: CookieService.getValue(nameKey),
+        }),
       });
+      console.log(res.ok);
       if (res.ok) {
         const json = await res.json();
-        console.log(json);
       }
       setIsCreatingNote(false);
     }
   }
+
+  console.log(currentNotes);
 
   return (
     <>
@@ -118,23 +131,26 @@ export default function NotesPage() {
         </div>
       </div>
       <div className="notesList">
-        {currentNotes.map((note) => (
-          <div className="notesList-note" key={createKey(16)}>
-            <h3 className="notesList-note-header">
-              {note.title}{" "}
-              {note.link ? (
-                <a
-                  className="notesList-note-link"
-                  href={note.link}
-                  target="_blank"
-                >
-                  Посилання
-                </a>
-              ) : null}
-            </h3>
-            <p className="notesList-note-content">{note.content}</p>
-          </div>
-        ))}
+        {currentNotes.map((note) => {
+          console.log(currentNotes);
+          return (
+            <div className="notesList-note" key={createKey(16)}>
+              <h3 className="notesList-note-header">
+                {note.title}{" "}
+                {note.link ? (
+                  <a
+                    className="notesList-note-link"
+                    href={note.link}
+                    target="_blank"
+                  >
+                    Посилання
+                  </a>
+                ) : null}
+              </h3>
+              <p className="notesList-note-content">{note.content}</p>
+            </div>
+          );
+        })}
       </div>
     </>
   );

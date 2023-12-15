@@ -6,6 +6,8 @@
       <excludeFolder url="file://$MODULE_DIR$/../../back-end/ktor/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/../../back-end/ktor/build" />
     </content>
+    <content url="file://$MODULE_DIR$/../../back-end/ktor" />
+    <content url="file://$MODULE_DIR$/../../back-end/ktor" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

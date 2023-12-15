@@ -8,7 +8,7 @@ export type NotesResponseType = {
   lesson: string;
   link: string;
   content: string;
-  type: string;
+  type: 1 | 2 | 3;
 };
 
 export type ScheduleResponseType = {
@@ -38,12 +38,12 @@ export const createNoteEndpoint: EndpointData = {
 };
 
 export const getNotesEndpoint: EndpointData = {
-  endpoint: "/note/notesByType",
+  endpoint: "/note/",
   method: "GET",
 };
 
-export async function getNotes(type: 1 | 2 | 3) {
-  const res = await fetch(backendURL + getNotesEndpoint.endpoint + `?type=1`, {
+export async function getNotes(login: string) {
+  const res = await fetch(backendURL + getNotesEndpoint.endpoint + login, {
     method: getNotesEndpoint.method,
     headers: defaultHeaders,
   });

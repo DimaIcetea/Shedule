@@ -4,7 +4,7 @@ import Image from "next/image";
 import logo from "../images/logo.gif";
 import profilePicture from "../images/profile.png";
 import logoutPicture from "../images/logout.png";
-import { apiKeyKey, nameKey } from "@/exports/cookieKeys";
+import { apiKeyKey, isAdminKey, nameKey } from "@/exports/cookieKeys";
 import {
   changeScheduleRoute,
   homeRoute,
@@ -48,9 +48,11 @@ export default function Header() {
       <div className="header-notes">
         {apiKey ? (
           <>
-            <h3 className="header-notes-text">
-              <Link href={changeScheduleRoute}>Редагувати розклад</Link>
-            </h3>
+            {CookieService.getValue(isAdminKey) === "true" ? (
+              <h3 className="header-notes-text">
+                <Link href={changeScheduleRoute}>Редагувати розклад</Link>
+              </h3>
+            ) : null}
             <h3 className="header-notes-text">
               <Link href={notesRoute}>Переглянути нотатки</Link>
             </h3>

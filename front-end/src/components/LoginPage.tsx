@@ -7,12 +7,9 @@ import {
 } from "@/exports/appAPIendpoints";
 import { homeRoute } from "@/exports/appRoutes";
 import { CookieService } from "@/exports/cookieService";
-import {
-  apiKeyKey,
-  nameKey,
-} from "@/exports/cookieKeys";
+import { apiKeyKey, isAdminKey, nameKey } from "@/exports/cookieKeys";
 import { useRouter } from "next/navigation";
-import { FormEvent, useEffect } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 type InputDataType = {
   name: string;
@@ -22,10 +19,15 @@ type InputDataType = {
 type ResponseData = {
   token: string;
   message: string;
+  login: string;
+  admin: boolean;
 };
 
 export default function LoginPage() {
   const router = useRouter();
+
+  const [isBEError, setIsBEError] = useState(false);
+  const [customMessage, setCustomMessage] = useState("");
 
   useEffect(() => {
     if (CookieService.getValue(apiKeyKey)) {
@@ -35,6 +37,8 @@ export default function LoginPage() {
 
   async function loginFormSubmitHandler(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setIsBEError(false);
+    setCustomMessage("");
     const target = e.target as HTMLFormElement;
     const data: InputDataType = {
       name: (target[0] as HTMLInputElement).value,
@@ -51,10 +55,14 @@ export default function LoginPage() {
           password: data.password,
         }),
       });
+      if (res.status === 401) {
+        setCustomMessage("Користувач не знайдений")
+      }
       if (res.ok) {
         const json = (await res.json()) as ResponseData;
+        CookieService.setValue(isAdminKey, "" + json.admin);
         CookieService.setValue(apiKeyKey, json.token);
-        CookieService.setValue(nameKey, data.name);
+        CookieService.setValue(nameKey, json.login);
         router.push(homeRoute);
       }
     }
@@ -69,6 +77,18 @@ export default function LoginPage() {
         <h1 className="registration-form-header">Ввійдіть в акаунт</h1>
         <div className="registration-form-ruler" />
         <div className="registration-form-content">
+          {isBEError ? (
+            <h3 className="registration-form-content-errorText">
+              Помилка про обробці даних
+            </h3>
+          ) : null}
+
+          {customMessage !== "" ? (
+            <h3 className="registration-form-content-errorText">
+              {customMessage}
+            </h3>
+          ) : null}
+
           <input
             className="registration-form-content-input"
             type="text"

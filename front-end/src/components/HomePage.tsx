@@ -1,7 +1,7 @@
 "use client";
 
 import { createKey } from "@/exports/createKey";
-import { numberToDayUA } from "@/exports/numberToDay";
+import { indexToDay } from "@/exports/indexToDay";
 import { useEffect, useState } from "react";
 import groupsJSON from "../content/groups.json";
 import { indexToLessonTime } from "@/exports/indexToLessonTime";
@@ -11,7 +11,7 @@ import { indexToWord } from "@/exports/indexToWord";
 import { transformScheduleData } from "@/exports/transformScheduleData";
 
 export default function HomePage() {
-  const [currentTab, setCurrentTab] = useState(1);
+  const [currentTab, setCurrentTab] = useState(0);
   const [periods, setPeriods] = useState<number>(0);
   const [selectedGroup, setSelectedGroup] = useState<string>("АА-31");
   const [transformedData, setTransformedData] =
@@ -25,12 +25,6 @@ export default function HomePage() {
   useEffect(() => {
     if (data) {
       const { array: newData, numberOfPeriods } = transformScheduleData(data);
-      console.log(
-        "pizdec",
-        newData,
-        numberOfPeriods,
-        Array(numberOfPeriods).fill(1)
-      );
       setPeriods(numberOfPeriods);
       setTransformedData(newData);
     }
@@ -97,7 +91,7 @@ export default function HomePage() {
                           className="schedule-sub-body-cell"
                         >
                           <p className="schedule-sub-body-cell-headerText">
-                            {numberToDayUA(index)}
+                            {indexToDay(index)}
                           </p>
                           {data.map((d, i) => (
                             <div

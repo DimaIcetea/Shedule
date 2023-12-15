@@ -7,7 +7,7 @@ import {
 } from "@/exports/appAPIendpoints";
 import { homeRoute } from "@/exports/appRoutes";
 import { CookieService } from "@/exports/cookieService";
-import { apiKeyKey, nameKey } from "@/exports/cookieKeys";
+import { apiKeyKey, isAdminKey, nameKey } from "@/exports/cookieKeys";
 import {
   vaildationInitState,
   validationReducer,
@@ -35,6 +35,7 @@ type InputDataType = {
 type ResponseData = {
   token: string;
   message: string;
+  admin: boolean;
 };
 
 export default function RegistrationPage() {
@@ -45,7 +46,7 @@ export default function RegistrationPage() {
     vaildationInitState
   );
 
-    console.log(CookieService.getValue(apiKeyKey))
+  console.log(CookieService.getValue(apiKeyKey));
 
   useEffect(() => {
     if (CookieService.getValue(apiKeyKey)) {
@@ -100,6 +101,7 @@ export default function RegistrationPage() {
       });
       if (res.ok) {
         const json = (await res.json()) as ResponseData;
+        CookieService.setValue(isAdminKey, "" + json.admin);
         CookieService.setValue(apiKeyKey, json.token);
         CookieService.setValue(nameKey, data.name);
         router.push(homeRoute);

@@ -1,4 +1,4 @@
-export function numberToDayUA(number: number) {
+export function indexToDay(number: number) {
   switch (number) {
     case 0:
       return "Понеділок";

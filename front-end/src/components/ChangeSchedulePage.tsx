@@ -1,14 +1,18 @@
 "use client";
 
+import { indexToDay } from "@/exports/indexToDay";
+import { indexToLessonTime } from "@/exports/indexToLessonTime";
+import { indexToWord } from "@/exports/indexToWord";
+
 export type ScheduleResponseType = {
-    lesson: string;
-    teacher: string;
-    period: number;
-    link: string;
-    group: string;
-    time: number;
-    day: number;
-  };
+  lesson: string;
+  teacher: string;
+  period: number;
+  link: string;
+  group: string;
+  time: number;
+  day: number;
+};
 
 export default function ChangeSchedulePage() {
   function formSubmitHandler() {}
@@ -36,6 +40,7 @@ export default function ChangeSchedulePage() {
           <input
             className={"notes-createNote-form-input"}
             placeholder="Введіть посилання"
+            type="url"
           ></input>
           <select
             placeholder="Введіть період"
@@ -44,43 +49,49 @@ export default function ChangeSchedulePage() {
             <option value="" disabled selected>
               Оберіть період
             </option>
-            {Array(4).fill(1).map((val) => {
-              return (
-                <option value={val + 1} key={val}>
-                  {val + 1}
-                </option>
-              );
-            })}
+            {Array(4)
+              .fill(1)
+              .map((_, index) => {
+                return (
+                  <option value={index + 1} key={index}>
+                    {indexToWord(index + 1 as 1 | 2 | 3 | 4) + " період"}
+                  </option>
+                );
+              })}
           </select>
           <select
             placeholder="Введіть день"
             className={"notes-createNote-form-select"}
           >
             <option value="" disabled selected>
-              Оберіть період
+              Оберіть день
             </option>
-            {Array(6).fill(1).map((val) => {
-              return (
-                <option value={val + 1} key={val}>
-                  {val + 1}
-                </option>
-              );
-            })}
+            {Array(6)
+              .fill(1)
+              .map((_, index) => {
+                return (
+                  <option value={index + 1} key={index}>
+                    {indexToDay(index)}
+                  </option>
+                );
+              })}
           </select>
           <select
             placeholder="Введіть час"
             className={"notes-createNote-form-select"}
           >
             <option value="" disabled selected>
-              Оберіть період
+              Оберіть час
             </option>
-            {Array(6).fill(1).map((val) => {
-              return (
-                <option value={val + 1} key={val}>
-                  {val + 1}
-                </option>
-              );
-            })}
+            {Array(6)
+              .fill(1)
+              .map((_, index) => {
+                return (
+                  <option value={index + 1} key={index}>
+                    {indexToLessonTime(index)}
+                  </option>
+                );
+              })}
           </select>
           <button className={"notes-createNote-form-button"} type="submit">
             Додати нову інформацію
