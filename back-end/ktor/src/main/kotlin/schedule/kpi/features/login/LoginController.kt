@@ -38,7 +38,8 @@ class LoginController(private val call: ApplicationCall) {
                 val responseModel = LoginResponseRemote(
                     login = receive.login,
                     admin = isAdmin,
-                    message = "login successfully"
+                    message = "login successfully",
+                    token = token
                 )
                 call.respond(HttpStatusCode.OK, responseModel)
             } else {
