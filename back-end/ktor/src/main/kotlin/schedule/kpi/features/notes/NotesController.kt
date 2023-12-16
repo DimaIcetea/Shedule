@@ -31,8 +31,8 @@ class NotesController(private val call: ApplicationCall) {
             )
         } catch (e: ExposedSQLException) {
             val responseModel = RegisterResponseModelEXC(message = "Something went wrong")
-            call.respond(HttpStatusCode.Conflict, RegisterResponseModelEXC)
+            call.respond(HttpStatusCode.Conflict, responseModel)
         }
         val responseModel = RegisterResponseModelEXC(message = "Added successfully")
-        call.respond(HttpStatusCode.OK, RegisterResponseModelEXC)
+        call.respond(HttpStatusCode.OK, responseModel)
     }}

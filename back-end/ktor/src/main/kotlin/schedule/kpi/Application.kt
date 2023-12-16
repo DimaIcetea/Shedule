@@ -44,6 +44,7 @@ fun configureDatabase() {
         )
 }
 
+
 fun Application.configureContentNegotiation() {
     install(ContentNegotiation) {
         json(

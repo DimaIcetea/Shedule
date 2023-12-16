@@ -4,6 +4,7 @@ import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
+import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.exceptions.ExposedSQLException
 import schedule.kpi.database.tokens.TokenDTO
 import schedule.kpi.database.tokens.Tokens
@@ -19,13 +20,14 @@ class RegisterController(private val call: ApplicationCall) {
         val registerReceiveRemote = call.receive<RegisterReceiveRemote>()
         if(registerReceiveRemote.email.isValidEmail()){
             val responseModel = RegisterResponseModelEXC(message = "Email is not valid")
-            call.respond(HttpStatusCode.BadRequest, RegisterResponseModelEXC)
+            call.respond(HttpStatusCode.BadRequest, responseModel)
         }
         val userDTO = Users.fetchUser(registerReceiveRemote.login)
 
-        if(userDTO != null){
+        if (userDTO != null) {
             val responseModel = RegisterResponseModelEXC(message = "User already exists")
-            call.respond(HttpStatusCode.BadRequest, RegisterResponseModelEXC)
+            call.respond(HttpStatusCode.BadRequest, responseModel)
+
         }else  {
             val token = UUID.randomUUID().toString()
 
@@ -52,7 +54,7 @@ class RegisterController(private val call: ApplicationCall) {
                 )
             }catch (e: ExposedSQLException){
                 val responseModel = RegisterResponseModelEXC(message = "User with this username already exists")
-                call.respond(HttpStatusCode.BadRequest, RegisterResponseModelEXC)
+                call.respond(HttpStatusCode.BadRequest, responseModel)
             }
             Tokens.insert(TokenDTO(rowId = UUID.randomUUID().toString(), login = registerReceiveRemote.login,
                 token = token

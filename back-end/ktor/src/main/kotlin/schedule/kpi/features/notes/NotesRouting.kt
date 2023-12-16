@@ -40,7 +40,7 @@ fun Application.configureNotesRouting() {
             }
 
         }
-        get("/note/{login}") {
+        get("/notes/{login}") {
             val groupParam = call.parameters["login"] ?: return@get call.respond(
                 HttpStatusCode.BadRequest,
                 "Type parameter is missing"
