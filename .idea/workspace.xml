@@ -5,24 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7c4f88cb-cf40-4094-9d1b-bddb2aa3c017" name="Changes" comment="???">
-      <change beforePath="$PROJECT_DIR$/.idea/modules/schedule.kpi.schedule-backend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/schedule.kpi.schedule-backend.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/schedule.kpi.schedule-backend.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/schedule.kpi.schedule-backend.main.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/schedule.kpi.schedule-backend.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/schedule.kpi.schedule-backend.test.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/ktor/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/ktor/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/ktor/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/ktor/gradlew" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/ktor/src/main/kotlin/schedule/kpi/features/notes/NotesController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/ktor/src/main/kotlin/schedule/kpi/features/notes/NotesController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/ktor/src/main/kotlin/schedule/kpi/features/notes/NotesRouting.kt" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/ktor/src/main/kotlin/schedule/kpi/features/notes/NotesRouting.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/ChangeSchedulePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/ChangeSchedulePage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front-end/src/components/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/HomePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/HomePage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/LoginPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/LoginPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/NotesPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/NotesPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/RegistrationPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/RegistrationPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/exports/appAPIendpoints.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/exports/appAPIendpoints.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/exports/cookieKeys.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/exports/cookieKeys.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/exports/numberToDay.ts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

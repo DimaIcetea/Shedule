@@ -19,11 +19,6 @@ import { CookieService } from "@/exports/cookieService";
 export default function Header() {
   const pathName = usePathname();
 
-  let apiKey: string | undefined = "";
-  if (typeof window !== "undefined") {
-    apiKey = CookieService.getValue(apiKeyKey);
-  }
-
   function logoutHandler() {
     CookieService.clear();
     setTimeout(() => {
@@ -46,7 +41,7 @@ export default function Header() {
         </Link>
       </div>
       <div className="header-notes">
-        {apiKey ? (
+        {CookieService.getValue(apiKeyKey) ? (
           <>
             {CookieService.getValue(isAdminKey) === "true" ? (
               <h3 className="header-notes-text">
@@ -60,7 +55,7 @@ export default function Header() {
         ) : null}
       </div>
       <div className="header-auth">
-        {apiKey ? (
+        {CookieService.getValue(apiKeyKey) ? (
           <>
             <Image
               className="header-auth-image header-auth-image-button"
