@@ -15,6 +15,10 @@ import schedule.kpi.database.lessons.Lessons
 import com.auth0.jwt.JWT
 import com.auth0.jwt.exceptions.JWTDecodeException
 import com.auth0.jwt.interfaces.DecodedJWT
+import org.h2.engine.User
+import schedule.kpi.database.tokens.Tokens
+import schedule.kpi.database.tokens.UserFromTokenDTO
+import schedule.kpi.database.users.Users
 
 fun decodeToken(token: String): DecodedJWT? {
     try {
@@ -29,7 +33,7 @@ fun Application.configureStudyRouting() {
             val studyController = StudyController(call)
             studyController.registerNewLesson()
         }
-        delete("/study/{id}"){
+        delete("/study"){
             this@routing.intercept(ApplicationCallPipeline.Features) {
                 val userToken = call.request.headers["Authorization"]
                 if (userToken.isNullOrEmpty()) {
@@ -43,15 +47,27 @@ fun Application.configureStudyRouting() {
                     return@intercept finish()
                 }
             }
-            val itemId = call.parameters["id"]?.toIntOrNull()
-            if (itemId != null) {
-                transaction { Lessons.deleteWhere { Lessons.id eq itemId } }
+
+            val period = call.parameters["period"]?.toIntOrNull()
+            val day = call.parameters["day"]?.toIntOrNull()
+            val time = call.parameters["time"]?.toIntOrNull()
+
+            if (period != null && day != null && time != null) {
+                try {
+                    transaction {
+                        Lessons.deleteWhere {
+                            Lessons.period eq period and
+                                    (Lessons.day eq day) and
+                                    (Lessons.time eq time)
+                        }
+                    }
+                } catch (_: Exception) {}
                 call.respond(HttpStatusCode.OK)
             } else {
-                call.respond(HttpStatusCode.BadRequest, "Invalid id format")
+                call.respond(HttpStatusCode.BadRequest, "Invalid date format")
             }
         }
-        patch("/study/{id}"){
+        patch("/study"){
             this@routing.intercept(ApplicationCallPipeline.Features) {
                 val userToken = call.request.headers["Authorization"]
                 if (userToken.isNullOrEmpty()) {
@@ -60,36 +76,42 @@ fun Application.configureStudyRouting() {
                 }
 
                 val decodedToken = decodeToken(userToken)
-                if (decodedToken?.getClaim("admin")?.asBoolean() != true) {
+
+                val user = transaction { Tokens.select { Tokens.token eq userToken }
+                        .map { UserFromTokenDTO( login = it[Tokens.login]) }.firstOrNull() }
+
+                if (user?.login == null) {
+                    call.respond(HttpStatusCode.Unauthorized, "Invalid token.")
+                    return@intercept finish()
+                }
+
+                val isAdmin = transaction { Users.fetchUser(user.login)?.admin }
+
+                if (isAdmin.toString() != "true") {
                     call.respond(HttpStatusCode.Forbidden, "Access denied. Admin privileges required.")
                     return@intercept finish()
                 }
             }
-            val userToken = call.request.headers["Authorization"] // Получаем токен из заголовков
 
+            val period = call.parameters["period"]?.toIntOrNull()
+            val day = call.parameters["day"]?.toIntOrNull()
+            val time = call.parameters["time"]?.toIntOrNull()
 
-            if (userToken.isNullOrEmpty()) {
-                call.respond(HttpStatusCode.Unauthorized, "Authorization token is missing")
-                return@patch
-            }
-
-
-            val decodedToken = decodeToken(userToken)
-
-
-            if (decodedToken?.getClaim("admin")?.asBoolean() == true) {
-
-                val itemId = call.parameters["id"]?.toIntOrNull()
-                if (itemId != null) {
-                    val studyController = StudyController(call)
-                    studyController.updateLesson()
-                    transaction { Lessons.deleteWhere { Lessons.id eq itemId } }
-                    call.respond(HttpStatusCode.OK)
-                } else {
-                    call.respond(HttpStatusCode.BadRequest, "Invalid id format")
-                }
+            if (period != null && day != null && time != null) {
+                val studyController = StudyController(call)
+                try {
+                    transaction {
+                        Lessons.deleteWhere {
+                            Lessons.period eq period and
+                                    (Lessons.day eq day) and
+                                    (Lessons.time eq time)
+                        }
+                    }
+                } catch (_: Exception) {}
+                studyController.updateLesson()
+                call.respond(HttpStatusCode.OK)
             } else {
-                call.respond(HttpStatusCode.Forbidden, "Access denied. Admin rights required.")
+                call.respond(HttpStatusCode.BadRequest, "Invalid date format")
             }
 
         }

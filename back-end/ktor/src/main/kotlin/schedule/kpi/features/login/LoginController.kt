@@ -43,7 +43,7 @@ class LoginController(private val call: ApplicationCall) {
                 )
                 call.respond(HttpStatusCode.OK, responseModel)
             } else {
-                val responseModel = RegisterResponseModel(login = receive.login, message = "invalid password")
+                val responseModel = RegisterResponseModelEXC(message = "invalid password")
                 call.respond(HttpStatusCode.BadRequest, responseModel)
             }
         }

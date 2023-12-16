@@ -6,7 +6,7 @@ export class CookieService {
   }
 
   static setValue(key: string, value: string) {
-    document.cookie = `${key}=${value};Max-Age=${Date.now() + 34560000000}`     
+    document.cookie = `${key}=${value};Max-Age=${Date.now() + 34560000000};path=*`     
   }
 
   static removeValue(key: string) {}

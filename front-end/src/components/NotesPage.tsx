@@ -4,6 +4,7 @@ import {
   backendURL,
   createNoteEndpoint,
   defaultHeaders,
+  deleteNote,
   getNotes,
 } from "@/exports/appAPIendpoints";
 import { nameKey } from "@/exports/cookieKeys";
@@ -12,6 +13,9 @@ import { createKey } from "@/exports/createKey";
 import { indexToLessonType } from "@/exports/indexToLessonType";
 import { useQuery } from "@/exports/useQuery";
 import { FormEvent, useEffect, useState } from "react";
+import crossImage from "@/images/cross.png";
+import Image from "next/image";
+import { ErrorMessage } from "./ErrorMessage";
 
 type NoteData = {
   title: string;
@@ -19,27 +23,32 @@ type NoteData = {
   type: 1 | 2 | 3;
   link: string;
   content: string;
+  id: number;
 };
 
 export default function NotesPage() {
   const [isCreatingNote, setIsCreatingNote] = useState(false);
   const [currentNotes, setCurrentNotes] = useState<NoteData[]>([]);
+  const [numberOfNotesDeletion, setNumberOfNotesDeletion] = useState(0);
 
   const { data, isLoading } = useQuery(
     () => getNotes(CookieService.getValue(nameKey)!),
-    ["get notes", CookieService.getValue(nameKey)!, "" + isCreatingNote]
+    [
+      "get notes",
+      CookieService.getValue(nameKey)!,
+      "" + isCreatingNote,
+      "" + numberOfNotesDeletion,
+    ]
   );
 
   useEffect(() => {
     if (data) setCurrentNotes(data);
   }, [isLoading]);
 
-  console.log(data);
-
   async function formSubmitHandler(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const target = e.target as HTMLFormElement;
-    const data: NoteData = {
+    const data: Omit<NoteData, "id"> = {
       title: (target[0] as HTMLInputElement).value,
       lesson: (target[1] as HTMLInputElement).value,
       type: +(target[2] as HTMLSelectElement).value as 1 | 2 | 3,
@@ -57,7 +66,6 @@ export default function NotesPage() {
           login: CookieService.getValue(nameKey),
         }),
       });
-      console.log(res.ok);
       if (res.ok) {
         const json = await res.json();
       }
@@ -65,7 +73,12 @@ export default function NotesPage() {
     }
   }
 
-  console.log(currentNotes);
+  async function deleteNoteHandler(id: number) {
+    const res = await deleteNote(id);
+    if (res.ok) setNumberOfNotesDeletion(numberOfNotesDeletion + 1);
+  }
+
+  if (!CookieService.getValue(nameKey)) return <ErrorMessage code={403} message={"Немає доступу"} />
 
   return (
     <>
@@ -84,6 +97,12 @@ export default function NotesPage() {
                 className={"notes-createNote-form"}
                 onSubmit={formSubmitHandler}
               >
+                <Image
+                  className={"notes-createNote-form-cross"}
+                  src={crossImage}
+                  alt={"cross"}
+                  onClick={() => setIsCreatingNote(false)}
+                />
                 <input
                   className={"notes-createNote-form-input"}
                   placeholder="Введіть заголовок *"
@@ -132,9 +151,14 @@ export default function NotesPage() {
       </div>
       <div className="notesList">
         {currentNotes.map((note) => {
-          console.log(currentNotes);
           return (
             <div className="notesList-note" key={createKey(16)}>
+              <Image
+                className="notesList-note-cross"
+                src={crossImage}
+                alt={"Cross"}
+                onClick={() => deleteNoteHandler(note.id)}
+              />
               <h3 className="notesList-note-header">
                 {note.title}{" "}
                 {note.link ? (

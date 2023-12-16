@@ -30,9 +30,9 @@ class RegisterController(private val call: ApplicationCall) {
 
         }else  {
             val token = UUID.randomUUID().toString()
+            var adminKey = false
 
             try {
-                var adminKey = false
                 adminKey = if (registerReceiveRemote.secret =="KPI"){
                     true
                 } else{
@@ -62,7 +62,7 @@ class RegisterController(private val call: ApplicationCall) {
 
             )
             val responseModel = RegisterResponseModel(
-                login = registerReceiveRemote.login,
+                login = registerReceiveRemote.login, token = token, isAdmin = adminKey,
                 message = "User registered successfully"
             )
             call.respond(HttpStatusCode.Created, responseModel)

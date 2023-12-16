@@ -66,6 +66,7 @@ fun Application.configureCORS() {
         allowMethod(HttpMethod.Get)
         allowHeader(HttpHeaders.AccessControlAllowOrigin)
         allowHeader(HttpHeaders.ContentType)
+        allowHeader(HttpHeaders.Authorization)
         anyHost()
     }
 }

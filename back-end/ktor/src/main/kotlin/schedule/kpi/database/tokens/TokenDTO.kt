@@ -5,3 +5,7 @@ class TokenDTO (
     val login: String,
     val token: String
 )
+
+data class UserFromTokenDTO (
+        val login: String
+)

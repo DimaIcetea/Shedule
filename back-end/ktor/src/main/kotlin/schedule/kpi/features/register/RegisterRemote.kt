@@ -14,7 +14,9 @@ data class RegisterReceiveRemote(
 @Serializable
 data class RegisterResponseModel(
     val login: String,
-    val message: String
+    val message: String,
+    val token: String,
+    val isAdmin: Boolean
 )
 @Serializable
 data class RegisterResponseModelEXC(

@@ -101,11 +101,13 @@ export default function HomePage() {
                               <p className="schedule-sub-body-cell-data-mainText">
                                 <a
                                   className={`${
-                                    d.link !== ""
+                                    d.link
                                       ? "schedule-sub-body-cell-text-hyperlink"
+                                      : d.lesson
+                                      ? ""
                                       : "schedule-sub-body-cell-text-disabled"
                                   }`}
-                                  href={d.link}
+                                  href={d.link !== "" ? d.link : undefined}
                                   target="_blank"
                                 >
                                   {indexToLessonTime(i) +

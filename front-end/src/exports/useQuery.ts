@@ -11,7 +11,6 @@ export function useQuery<T>(
     setData(undefined);
     setIsLoading(true);
     queryFunction().then((data) => {
-      console.log(data);
       setData(data);
       setIsLoading(false);
     });

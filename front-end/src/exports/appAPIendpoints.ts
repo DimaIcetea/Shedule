@@ -9,6 +9,7 @@ export type NotesResponseType = {
   link: string;
   content: string;
   type: 1 | 2 | 3;
+  id: number;
 };
 
 export type ScheduleResponseType = {
@@ -38,7 +39,7 @@ export const createNoteEndpoint: EndpointData = {
 };
 
 export const getNotesEndpoint: EndpointData = {
-  endpoint: "/note/",
+  endpoint: "/notes/",
   method: "GET",
 };
 
@@ -49,6 +50,18 @@ export async function getNotes(login: string) {
   });
 
   return (await res.json()) as NotesResponseType[];
+}
+
+export const deleteNoteEndpoint: EndpointData = {
+  endpoint: "/note/",
+  method: "DELETE",
+};
+
+export async function deleteNote(id: number) {
+  return await fetch(backendURL + deleteNoteEndpoint.endpoint + id, {
+    method: deleteNoteEndpoint.method,
+    headers: defaultHeaders,
+  });
 }
 
 export const getScheduleEndpoint: EndpointData = {
@@ -68,26 +81,68 @@ export async function getSchedule(group: string) {
   return (await res.json()) as ScheduleResponseType[];
 }
 
+type PatchScheduleParamsType = {
+  period: number;
+  day: number;
+  time: number;
+};
+
 export const patchScheduleEndpoint: EndpointData = {
-  endpoint: "/study/",
+  endpoint: "/study",
   method: "PATCH",
 };
 
-export async function patchSchedule(id: number, apiKey: string) {
-  const res = await fetch(backendURL + patchScheduleEndpoint.endpoint + id, {
-    method: patchScheduleEndpoint.method,
-    headers: {
-      ...defaultHeaders,
-      Authorization: apiKey,
-    },
-  });
-
-  return (await res.json()) as any;
+export async function patchSchedule(
+  params: PatchScheduleParamsType,
+  apiKey: string,
+  body: ScheduleResponseType
+) {
+  return await fetch(
+    backendURL +
+      patchScheduleEndpoint.endpoint +
+      "?period=" +
+      params.period +
+      "&day=" +
+      params.day +
+      "&time=" +
+      params.time,
+    {
+      method: patchScheduleEndpoint.method,
+      headers: {
+        ...defaultHeaders,
+        Authorization: apiKey,
+      },
+      body: JSON.stringify(body),
+    }
+  );
 }
 
-export const postScheduleEndpoint: EndpointData = {
+export const deleteScheduleEndpoint: EndpointData = {
   endpoint: "/study",
-  method: "POST",
+  method: "DELETE",
+};
+
+export async function deleteSchedule(
+  params: PatchScheduleParamsType,
+  apiKey: string
+) {
+  return await fetch(
+    backendURL +
+      deleteScheduleEndpoint.endpoint +
+      "?period=" +
+      params.period +
+      "&day=" +
+      params.day +
+      "&time=" +
+      params.time,
+    {
+      method: deleteScheduleEndpoint.method,
+      headers: {
+        ...defaultHeaders,
+        Authorization: apiKey,
+      },
+    }
+  );
 }
 
 export const defaultHeaders = {

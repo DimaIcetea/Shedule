@@ -6,7 +6,25 @@
   <component name="ChangeListManager">
     <list default="true" id="7c4f88cb-cf40-4094-9d1b-bddb2aa3c017" name="Changes" comment="???">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/ktor/src/main/kotlin/schedule/kpi/Application.kt" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/ktor/src/main/kotlin/schedule/kpi/Application.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/ktor/src/main/kotlin/schedule/kpi/database/notes/NotesDTO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/ktor/src/main/kotlin/schedule/kpi/database/notes/NotesDTO.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/ktor/src/main/kotlin/schedule/kpi/database/tokens/TokenDTO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/ktor/src/main/kotlin/schedule/kpi/database/tokens/TokenDTO.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/ktor/src/main/kotlin/schedule/kpi/database/tokens/Tokens.kt" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/ktor/src/main/kotlin/schedule/kpi/database/tokens/Tokens.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/ktor/src/main/kotlin/schedule/kpi/features/login/LoginController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/ktor/src/main/kotlin/schedule/kpi/features/login/LoginController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/ktor/src/main/kotlin/schedule/kpi/features/notes/NotesRouting.kt" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/ktor/src/main/kotlin/schedule/kpi/features/notes/NotesRouting.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/ktor/src/main/kotlin/schedule/kpi/features/register/RegisterController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/ktor/src/main/kotlin/schedule/kpi/features/register/RegisterController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/ktor/src/main/kotlin/schedule/kpi/features/register/RegisterRemote.kt" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/ktor/src/main/kotlin/schedule/kpi/features/register/RegisterRemote.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/ktor/src/main/kotlin/schedule/kpi/features/study/StudyRouting.kt" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/ktor/src/main/kotlin/schedule/kpi/features/study/StudyRouting.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/app/not-found.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/app/not-found.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/components/ChangeSchedulePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/ChangeSchedulePage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/components/HomePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/HomePage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/components/NotesPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/NotesPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/components/RegistrationPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/RegistrationPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/exports/appAPIendpoints.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/exports/appAPIendpoints.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/exports/cookieService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/exports/cookieService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/exports/useQuery.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/exports/useQuery.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/scss/_not-found.scss" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/scss/_not-found.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/scss/_notes.scss" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/scss/_notes.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

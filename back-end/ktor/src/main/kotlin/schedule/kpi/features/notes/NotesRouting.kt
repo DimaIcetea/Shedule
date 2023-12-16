@@ -8,7 +8,7 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import schedule.kpi.database.notes.Notes
 import schedule.kpi.database.notes.NotesDTO
-import schedule.kpi.database.users.Users
+import schedule.kpi.database.notes.NotesDTOWithID
 import schedule.kpi.features.study.decodeToken
 
 fun Application.configureNotesRouting() {
@@ -18,19 +18,6 @@ fun Application.configureNotesRouting() {
             notesController.registerNewNote()
         }
         delete("/note/{id}") {
-            this@routing.intercept(ApplicationCallPipeline.Features) {
-                val userToken = call.request.headers["Authorization"]
-                if (userToken.isNullOrEmpty()) {
-                    call.respond(HttpStatusCode.Unauthorized, "Authorization token is missing")
-                    return@intercept finish()
-                }
-
-                val decodedToken = decodeToken(userToken)
-                if (decodedToken?.getClaim("admin")?.asBoolean() != true) {
-                    call.respond(HttpStatusCode.Forbidden, "Access denied. Admin privileges required.")
-                    return@intercept finish()
-                }
-            }
             val itemId = call.parameters["id"]?.toIntOrNull()
             if (itemId != null) {
                 transaction { Notes.deleteWhere { Notes.id eq itemId } }
@@ -47,31 +34,32 @@ fun Application.configureNotesRouting() {
             )
 
 
-            val isLoginValid = transaction {
-                Notes.select { Notes.login eq groupParam }
-                    .singleOrNull() != null
-            }
-
-            if (!isLoginValid) {
-                return@get call.respond(
-                    HttpStatusCode.BadRequest,
-                    "Invalid login"
-                )
-            }
+//            val isLoginValid = transaction {
+//                Notes.select { Notes.login eq groupParam }
+//                    .singleOrNull() != null
+//            }
+//
+//            if (!isLoginValid) {
+//                return@get call.respond(
+//                    HttpStatusCode.BadRequest,
+//                    "Invalid login"
+//                )
+//            }
 
 
             val notesForGroup = transaction {
                 Notes.select { Notes.login eq groupParam }
                     .orderBy(Notes.id, SortOrder.ASC)
                     .map {
-                        NotesDTO(
+                        NotesDTOWithID(
                             title = it[Notes.title],
                             lesson = it[Notes.lesson],
                             link = it[Notes.link],
                             content = it[Notes.content],
                             type = it[Notes.type],
-                            login = it[Notes.login]
-                        )
+                            login = it[Notes.login],
+                            id = it[Notes.id].value
+                                )
                     }
             }
 
@@ -96,13 +84,14 @@ fun Application.configureNotesRouting() {
                 Notes.select { Notes.type eq groupParam }
                     .orderBy(Notes.type, SortOrder.ASC)
                     .map {
-                        NotesDTO(
+                        NotesDTOWithID(
                             title = it[Notes.title],
                             lesson = it[Notes.lesson],
                             link = it[Notes.link],
                             content = it[Notes.content],
                             type = it[Notes.type],
-                            login = it[Notes.login]
+                            login = it[Notes.login],
+                            id = it[Notes.id].value
                         )
                     }
             }
