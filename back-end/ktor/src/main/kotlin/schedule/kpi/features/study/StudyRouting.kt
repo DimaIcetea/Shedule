@@ -41,8 +41,17 @@ fun Application.configureStudyRouting() {
                     return@intercept finish()
                 }
 
-                val decodedToken = decodeToken(userToken)
-                if (decodedToken?.getClaim("admin")?.asBoolean() != true) {
+                val user = transaction { Tokens.select { Tokens.token eq userToken }
+                        .map { UserFromTokenDTO( login = it[Tokens.login]) }.firstOrNull() }
+
+                if (user?.login == null) {
+                    call.respond(HttpStatusCode.Unauthorized, "Invalid token.")
+                    return@intercept finish()
+                }
+
+                val isAdmin = transaction { Users.fetchUser(user.login)?.admin }
+
+                if (isAdmin.toString() != "true") {
                     call.respond(HttpStatusCode.Forbidden, "Access denied. Admin privileges required.")
                     return@intercept finish()
                 }
@@ -62,7 +71,7 @@ fun Application.configureStudyRouting() {
                         }
                     }
                 } catch (_: Exception) {}
-                call.respond(HttpStatusCode.OK)
+                call.respond(HttpStatusCode.OK, "Deleted requested lesson")
             } else {
                 call.respond(HttpStatusCode.BadRequest, "Invalid date format")
             }
@@ -74,8 +83,6 @@ fun Application.configureStudyRouting() {
                     call.respond(HttpStatusCode.Unauthorized, "Authorization token is missing")
                     return@intercept finish()
                 }
-
-                val decodedToken = decodeToken(userToken)
 
                 val user = transaction { Tokens.select { Tokens.token eq userToken }
                         .map { UserFromTokenDTO( login = it[Tokens.login]) }.firstOrNull() }

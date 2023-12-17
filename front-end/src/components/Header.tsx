@@ -13,16 +13,21 @@ import {
   registerRoute,
 } from "@/exports/appRoutes";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { CookieService } from "@/exports/cookieService";
 
 export default function Header() {
   const pathName = usePathname();
+  const router = useRouter();
 
   function logoutHandler() {
     CookieService.clear();
-    setTimeout(() => {
-      window.location.reload();
+    const id = setTimeout(() => {
+      if (window.location.pathname !== homeRoute) {
+        router.push(homeRoute);
+      }
+      router.refresh();
+      clearTimeout(id);
     }, 50);
   }
 
@@ -63,6 +68,7 @@ export default function Header() {
               width={45}
               height={45}
               alt="Вийти з профілю користувача"
+              title="Вийти з профілю"
               onClick={logoutHandler}
             />
             <Image

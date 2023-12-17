@@ -1,3 +1,6 @@
+import { apiKeyKey } from "./cookieKeys";
+import { CookieService } from "./cookieService";
+
 type EndpointData = {
   endpoint: string;
   method: "POST" | "GET" | "DELETE" | "PATCH";
@@ -74,7 +77,10 @@ export async function getSchedule(group: string) {
     backendURL + getScheduleEndpoint.endpoint + `?group=${group}`,
     {
       method: getScheduleEndpoint.method,
-      headers: defaultHeaders,
+      headers: {
+        ...defaultHeaders,
+        Authorization: CookieService.getValue(apiKeyKey)!!!,
+      },
     }
   );
 

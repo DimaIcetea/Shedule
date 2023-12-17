@@ -13,7 +13,9 @@ import { transformScheduleData } from "@/exports/transformScheduleData";
 export default function HomePage() {
   const [currentTab, setCurrentTab] = useState(0);
   const [periods, setPeriods] = useState<number>(0);
-  const [selectedGroup, setSelectedGroup] = useState<string>("АА-31");
+  const [selectedGroup, setSelectedGroup] = useState<string>(
+    localStorage.getItem("selectedGroup") ?? "АА-31"
+  );
   const [transformedData, setTransformedData] =
     useState<ScheduleResponseType[][][]>();
 
@@ -30,6 +32,15 @@ export default function HomePage() {
     }
   }, [isLoading]);
 
+  useEffect(() => {
+    if (!data) {
+      setTransformedData(undefined);
+      setPeriods(0);
+    }
+  }, [JSON.stringify(data)]);
+
+  console.log(transformedData);
+
   return (
     <>
       <div className="groupSelector">
@@ -38,7 +49,10 @@ export default function HomePage() {
           <select
             className="groupSelector-content-select"
             value={selectedGroup}
-            onChange={(e) => setSelectedGroup(e.target.value)}
+            onChange={(e) => {
+              localStorage.setItem("selectedGroup", e.target.value);
+              setSelectedGroup(e.target.value);
+            }}
           >
             {groupsJSON.groups.map((group) => (
               <option key={createKey(16)} value={group}>
@@ -85,43 +99,47 @@ export default function HomePage() {
                 return currentTab === index ? (
                   <div className="schedule-sub">
                     <div className="schedule-sub-body">
-                      {transformedData![currentTab].map((data, index) => (
-                        <div
-                          key={createKey(16)}
-                          className="schedule-sub-body-cell"
-                        >
-                          <p className="schedule-sub-body-cell-headerText">
-                            {indexToDay(index)}
-                          </p>
-                          {data.map((d, i) => (
+                      {transformedData
+                        ? transformedData[currentTab].map((data, index) => (
                             <div
-                              className="schedule-sub-body-cell-data"
                               key={createKey(16)}
+                              className="schedule-sub-body-cell"
                             >
-                              <p className="schedule-sub-body-cell-data-mainText">
-                                <a
-                                  className={`${
-                                    d.link
-                                      ? "schedule-sub-body-cell-text-hyperlink"
-                                      : d.lesson
-                                      ? ""
-                                      : "schedule-sub-body-cell-text-disabled"
-                                  }`}
-                                  href={d.link !== "" ? d.link : undefined}
-                                  target="_blank"
+                              <p className="schedule-sub-body-cell-headerText">
+                                {indexToDay(index)}
+                              </p>
+                              {data.map((d, i) => (
+                                <div
+                                  className="schedule-sub-body-cell-data"
+                                  key={createKey(16)}
                                 >
-                                  {indexToLessonTime(i) +
-                                    " " +
-                                    (d.lesson !== "" ? d.lesson : "Немає пари")}
-                                </a>
-                              </p>
-                              <p className="schedule-sub-body-cell-data-subText">
-                                {d.teacher}
-                              </p>
+                                  <p className="schedule-sub-body-cell-data-mainText">
+                                    <a
+                                      className={`${
+                                        d.link
+                                          ? "schedule-sub-body-cell-text-hyperlink"
+                                          : d.lesson
+                                          ? ""
+                                          : "schedule-sub-body-cell-text-disabled"
+                                      }`}
+                                      href={d.link !== "" ? d.link : undefined}
+                                      target="_blank"
+                                    >
+                                      {indexToLessonTime(i) +
+                                        " " +
+                                        (d.lesson !== ""
+                                          ? d.lesson
+                                          : "Немає пари")}
+                                    </a>
+                                  </p>
+                                  <p className="schedule-sub-body-cell-data-subText">
+                                    {d.teacher}
+                                  </p>
+                                </div>
+                              ))}
                             </div>
-                          ))}
-                        </div>
-                      ))}
+                          ))
+                        : null}
                     </div>
                   </div>
                 ) : null;

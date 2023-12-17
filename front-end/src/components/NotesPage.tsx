@@ -16,6 +16,7 @@ import { FormEvent, useEffect, useState } from "react";
 import crossImage from "@/images/cross.png";
 import Image from "next/image";
 import { ErrorMessage } from "./ErrorMessage";
+import Modal from "./Modal";
 
 type NoteData = {
   title: string;
@@ -30,6 +31,8 @@ export default function NotesPage() {
   const [isCreatingNote, setIsCreatingNote] = useState(false);
   const [currentNotes, setCurrentNotes] = useState<NoteData[]>([]);
   const [numberOfNotesDeletion, setNumberOfNotesDeletion] = useState(0);
+  const [isModalOpened, setIsModalOpened] = useState(false);
+  const [idToDelete, setIdToDelete] = useState<number>();
 
   const { data, isLoading } = useQuery(
     () => getNotes(CookieService.getValue(nameKey)!),
@@ -73,12 +76,13 @@ export default function NotesPage() {
     }
   }
 
-  async function deleteNoteHandler(id: number) {
-    const res = await deleteNote(id);
-    if (res.ok) setNumberOfNotesDeletion(numberOfNotesDeletion + 1);
+  function deleteNoteHandler(id: number) {
+    setIdToDelete(id);
+    setIsModalOpened(true);
   }
 
-  if (!CookieService.getValue(nameKey)) return <ErrorMessage code={403} message={"Немає доступу"} />
+  if (!CookieService.getValue(nameKey))
+    return <ErrorMessage code={403} message={"Немає доступу"} />;
 
   return (
     <>
@@ -118,7 +122,7 @@ export default function NotesPage() {
                   className={"notes-createNote-form-select"}
                 >
                   <option value="" disabled selected>
-                    Оберіть тип уроку
+                    Оберіть тип уроку *
                   </option>
                   {[1, 2, 3].map((val) => {
                     return (
@@ -176,6 +180,15 @@ export default function NotesPage() {
           );
         })}
       </div>
+      {isModalOpened ? (
+        <Modal
+          closeModalHandler={() => setIsModalOpened(false)}
+          onSubmitModalHandler={async () => {
+            const res = await deleteNote(idToDelete!);
+            if (res.ok) setNumberOfNotesDeletion(numberOfNotesDeletion + 1);
+          }}
+        />
+      ) : null}
     </>
   );
 }

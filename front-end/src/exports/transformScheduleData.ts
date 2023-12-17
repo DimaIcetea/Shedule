@@ -30,11 +30,11 @@ const periods: ScheduleResponseType[][][] = Array(4)
   );
 
 export function transformScheduleData(data: ScheduleResponseType[]) {
-  const array: ScheduleResponseType[][][] = periods;
+  const array: ScheduleResponseType[][][] = Object.assign({}, periods);
   let numberOfPeriods = -1;
   data.forEach((val) => {
     array[val.period - 1][val.day - 1][val.time - 1] = val;
-    if (val.period > numberOfPeriods) numberOfPeriods = val.period
+    if (val.period > numberOfPeriods) numberOfPeriods = val.period;
   });
-  return {array, numberOfPeriods};
+  return { array, numberOfPeriods };
 }
