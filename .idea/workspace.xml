@@ -4,17 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c4f88cb-cf40-4094-9d1b-bddb2aa3c017" name="Changes" comment="???">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/ktor/src/main/kotlin/schedule/kpi/features/study/StudyRouting.kt" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/ktor/src/main/kotlin/schedule/kpi/features/study/StudyRouting.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/app/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/app/index.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/HomePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/HomePage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/components/NotesPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/NotesPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/exports/appAPIendpoints.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/exports/appAPIendpoints.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/scss/_header.scss" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/scss/_header.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/src/scss/_notes.scss" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/scss/_notes.scss" afterDir="false" />
-    </list>
+    <list default="true" id="7c4f88cb-cf40-4094-9d1b-bddb2aa3c017" name="Changes" comment="???" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

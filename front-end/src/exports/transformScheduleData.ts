@@ -30,7 +30,7 @@ const periods: ScheduleResponseType[][][] = Array(4)
   );
 
 export function transformScheduleData(data: ScheduleResponseType[]) {
-  const array: ScheduleResponseType[][][] = Object.assign({}, periods);
+  const array: ScheduleResponseType[][][] = JSON.parse(JSON.stringify(periods));
   let numberOfPeriods = -1;
   data.forEach((val) => {
     array[val.period - 1][val.day - 1][val.time - 1] = val;
