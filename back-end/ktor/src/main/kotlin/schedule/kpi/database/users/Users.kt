@@ -8,7 +8,6 @@ import org.jetbrains.exposed.sql.transactions.transaction
 object Users: Table("users") {
     internal val login =  Users.varchar("login", 25)
     private val password = Users.varchar("password", 25)
-    private val username = Users.varchar("username", 30)
     private val email = Users.varchar("email", 25)
     private val secret = Users.varchar("secret", 10)
     private val admin = Users.bool("admin").default(false)
@@ -18,7 +17,6 @@ object Users: Table("users") {
             Users.insert {
                 it[login] = userDTO.login
                 it[password] = userDTO.password
-                it[username] = userDTO.username
                 it[email] = userDTO.email ?: ""
                 it[secret] = userDTO.secret
                 it[admin] = userDTO.admin
@@ -29,12 +27,11 @@ object Users: Table("users") {
     fun fetchUser(login: String): UserDTO? {
         return try {
             transaction {
-                val userModel = Users.select { Users.login.eq(login) }.single()
+                val userModel = Users.select { Users.email.eq(email) }.single()
                 UserDTO(
                         login = userModel[Users.login],
                         password = userModel[password],
                         email = userModel[email],
-                        username = userModel[username],
                         secret = userModel[secret],
                         admin = userModel[admin]
                 )

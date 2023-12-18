@@ -15,7 +15,7 @@ class LoginController(private val call: ApplicationCall) {
 
     suspend fun performLogin() {
         val receive = call.receive<LoginReceiveRemote>()
-        val userDTO = Users.fetchUser(receive.login)
+        val userDTO = Users.fetchUser(receive.email)
 
         if (userDTO == null) {
             val responseModel = RegisterResponseModelEXC(message = "User not found")
@@ -26,24 +26,27 @@ class LoginController(private val call: ApplicationCall) {
 
                 val isAdmin =
                     userDTO.admin
+                val userLogin = userDTO.login
 
                 Tokens.insert(
                     TokenDTO(
                         rowId = UUID.randomUUID().toString(),
-                        login = receive.login,
+                        login = receive.email,
                         token = token
                     )
                 )
 
                 val responseModel = LoginResponseRemote(
-                    login = receive.login,
+                    email = receive.email,
                     admin = isAdmin,
                     message = "login successfully",
-                    token = token
+                    token = token,
+                    login = userLogin
+
                 )
                 call.respond(HttpStatusCode.OK, responseModel)
             } else {
-                val responseModel = RegisterResponseModel(login = receive.login, message = "invalid password")
+                val responseModel = RegisterResponseModel(login = receive.email, message = "invalid password")
                 call.respond(HttpStatusCode.BadRequest, responseModel)
             }
         }
