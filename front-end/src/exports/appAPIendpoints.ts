@@ -79,7 +79,7 @@ export async function getSchedule(group: string) {
       method: getScheduleEndpoint.method,
       headers: {
         ...defaultHeaders,
-        Authorization: CookieService.getValue(apiKeyKey)!!!,
+        Authorization: localStorage.getItem(apiKeyKey)!!!,
       },
     }
   );

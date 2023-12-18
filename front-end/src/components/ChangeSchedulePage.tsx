@@ -49,7 +49,7 @@ export default function ChangeSchedulePage() {
     ...defaultMessageValue,
   });
 
-  if (CookieService.getValue(isAdminKey) !== "true")
+  if (localStorage.getItem(isAdminKey) !== "true")
     return <ErrorMessage code={403} message={"Немає доступу"} />;
 
   async function formSubmitHandler(e: FormEvent<HTMLFormElement>) {
@@ -66,12 +66,12 @@ export default function ChangeSchedulePage() {
         lesson: (target[3] as HTMLInputElement).value,
         teacher: (target[4] as HTMLInputElement).value,
         link: (target[5] as HTMLInputElement).value,
-        group: CookieService.getValue(nameKey)?.split(" ")[0] || "",
+        group: localStorage.getItem(nameKey)?.split(" ")[0] || "", 
         ...params,
       };
       const res = await patchSchedule(
         params,
-        CookieService.getValue(apiKeyKey)!,
+        localStorage.getItem(apiKeyKey)!,
         data
       );
       if (res.ok)
@@ -80,7 +80,7 @@ export default function ChangeSchedulePage() {
     } else {
       const res = await deleteSchedule(
         params,
-        CookieService.getValue(apiKeyKey)!
+        localStorage.getItem(apiKeyKey)!
       );
       if (res.ok)
         setMessage({

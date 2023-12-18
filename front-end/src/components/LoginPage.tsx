@@ -30,7 +30,7 @@ export default function LoginPage() {
   const [customMessage, setCustomMessage] = useState("");
 
   useEffect(() => {
-    if (CookieService.getValue(apiKeyKey)) {
+    if (localStorage.getItem(apiKeyKey)) {
       router.push(homeRoute);
     }
   }, []);
@@ -60,9 +60,9 @@ export default function LoginPage() {
       }
       if (res.ok) {
         const json = (await res.json()) as ResponseData;
-        CookieService.setValue(isAdminKey, "" + json.admin);
-        CookieService.setValue(apiKeyKey, json.token);
-        CookieService.setValue(nameKey, json.login);
+        localStorage.setItem(isAdminKey, "" + json.admin);
+        localStorage.setItem(apiKeyKey, json.token);
+        localStorage.setItem(nameKey, json.login);
         router.push(homeRoute);
       }
     }

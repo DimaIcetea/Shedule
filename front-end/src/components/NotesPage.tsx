@@ -35,10 +35,10 @@ export default function NotesPage() {
   const [idToDelete, setIdToDelete] = useState<number>();
 
   const { data, isLoading } = useQuery(
-    () => getNotes(CookieService.getValue(nameKey)!),
+    () => getNotes(localStorage.getItem(nameKey)!),
     [
       "get notes",
-      CookieService.getValue(nameKey)!,
+      localStorage.getItem(nameKey)!,
       "" + isCreatingNote,
       "" + numberOfNotesDeletion,
     ]
@@ -73,7 +73,7 @@ export default function NotesPage() {
         },
         body: JSON.stringify({
           ...data,
-          login: CookieService.getValue(nameKey),
+          login: localStorage.getItem(nameKey)!,
         }),
       });
       if (res.ok) {
@@ -88,7 +88,7 @@ export default function NotesPage() {
     setIsModalOpened(true);
   }
 
-  if (!CookieService.getValue(nameKey))
+  if (!localStorage.getItem(nameKey))
     return <ErrorMessage code={403} message={"Немає доступу"} />;
 
   return (

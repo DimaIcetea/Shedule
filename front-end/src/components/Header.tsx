@@ -21,7 +21,7 @@ export default function Header() {
   const router = useRouter();
 
   function logoutHandler() {
-    CookieService.clear();
+    localStorage.clear();
     const id = setTimeout(() => {
       if (window.location.pathname !== homeRoute) {
         router.push(homeRoute);
@@ -46,9 +46,9 @@ export default function Header() {
         </Link>
       </div>
       <div className="header-notes">
-        {CookieService.getValue(apiKeyKey) ? (
+        {localStorage.getItem(apiKeyKey) ? (
           <>
-            {CookieService.getValue(isAdminKey) === "true" ? (
+            {localStorage.getItem(isAdminKey) === "true" ? (
               <h3 className="header-notes-text">
                 <Link href={changeScheduleRoute}>Редагувати розклад</Link>
               </h3>
@@ -60,7 +60,7 @@ export default function Header() {
         ) : null}
       </div>
       <div className="header-auth">
-        {CookieService.getValue(apiKeyKey) ? (
+        {localStorage.getItem(apiKeyKey) ? (
           <>
             <Image
               className="header-auth-image header-auth-image-button"
@@ -80,7 +80,7 @@ export default function Header() {
             />
             <div className="header-auth-name">
               <h3 className="header-auth-name-text">
-                {CookieService.getValue(nameKey)}
+                {localStorage.getItem(nameKey)}
               </h3>
             </div>
           </>

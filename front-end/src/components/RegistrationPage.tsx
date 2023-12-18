@@ -47,7 +47,7 @@ export default function RegistrationPage() {
   );
 
   useEffect(() => {
-    if (CookieService.getValue(apiKeyKey)) {
+    if (localStorage.getItem(apiKeyKey)) {
       router.push(homeRoute);
     }
   }, []);
@@ -99,9 +99,9 @@ export default function RegistrationPage() {
       });
       if (res.ok) {
         const json = (await res.json()) as ResponseData;
-        CookieService.setValue(isAdminKey, "" + json.isAdmin);
-        CookieService.setValue(apiKeyKey, json.token);
-        CookieService.setValue(nameKey, data.name);
+        localStorage.setItem(isAdminKey, "" + json.isAdmin);
+        localStorage.setItem(apiKeyKey, json.token);
+        localStorage.setItem(nameKey, data.name);
         router.push(homeRoute);
       } else {
         setIsBEError(true);
