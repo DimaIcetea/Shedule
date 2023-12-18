@@ -39,8 +39,6 @@ export default function HomePage() {
     }
   }, [JSON.stringify(data)]);
 
-  console.log(transformedData);
-
   return (
     <>
       <div className="groupSelector">

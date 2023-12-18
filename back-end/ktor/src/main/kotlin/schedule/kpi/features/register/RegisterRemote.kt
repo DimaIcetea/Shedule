@@ -18,6 +18,12 @@ data class RegisterResponseModel(
     val token: String,
     val isAdmin: Boolean
 )
+
+@Serializable
+data class FailedRegisterResponseModel(
+        val login: String,
+        val message: String
+)
 @Serializable
 data class RegisterResponseModelEXC(
     val message: String

@@ -7,6 +7,7 @@ import io.ktor.server.response.*
 import schedule.kpi.database.tokens.TokenDTO
 import schedule.kpi.database.tokens.Tokens
 import schedule.kpi.database.users.Users
+import schedule.kpi.features.register.FailedRegisterResponseModel
 import schedule.kpi.features.register.RegisterResponseModel
 import schedule.kpi.features.register.RegisterResponseModelEXC
 import java.util.*
@@ -46,7 +47,7 @@ class LoginController(private val call: ApplicationCall) {
                 )
                 call.respond(HttpStatusCode.OK, responseModel)
             } else {
-                val responseModel = RegisterResponseModel(login = receive.email, message = "invalid password")
+                val responseModel = FailedRegisterResponseModel(login = receive.email, message = "invalid password")
                 call.respond(HttpStatusCode.BadRequest, responseModel)
             }
         }

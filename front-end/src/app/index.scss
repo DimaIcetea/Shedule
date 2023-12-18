@@ -7,6 +7,14 @@
 @import "../scss/changeSchedule";
 @import "../scss/modal";
 
+html {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+html::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
+
 body {
   background-image: url("../images/background.jpg");
   background-repeat: no-repeat;

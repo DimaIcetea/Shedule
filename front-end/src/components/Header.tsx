@@ -92,7 +92,9 @@ export default function Header() {
               }`}
               href={registerRoute}
             >
-              <h3 className="header-auth-name-text">Зареєструватись</h3>
+              <h3 className="header-auth-name-text header-auth-name-text-highlighted">
+                Зареєструватись
+              </h3>
             </Link>
             <div className="header-auth-spacing" />
             <Link
@@ -101,7 +103,9 @@ export default function Header() {
               }`}
               href={loginRoute}
             >
-              <h3 className="header-auth-name-text">Увійти</h3>
+              <h3 className="header-auth-name-text header-auth-name-text-highlighted">
+                Увійти
+              </h3>
             </Link>
           </>
         )}

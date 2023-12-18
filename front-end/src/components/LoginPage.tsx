@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 
 type InputDataType = {
-  name: string;
+  email: string;
   password: string;
 };
 
@@ -41,17 +41,17 @@ export default function LoginPage() {
     setCustomMessage("");
     const target = e.target as HTMLFormElement;
     const data: InputDataType = {
-      name: (target[0] as HTMLInputElement).value,
+      email: (target[0] as HTMLInputElement).value,
       password: (target[1] as HTMLInputElement).value,
     };
-    if (data.name && data.password) {
+    if (data.email && data.password) {
       const res = await fetch(backendURL + loginEndpoint.endpoint, {
         method: loginEndpoint.method,
         headers: {
           ...defaultHeaders,
         },
         body: JSON.stringify({
-          login: data.name,
+          email: data.email,
           password: data.password,
         }),
       });
@@ -93,7 +93,7 @@ export default function LoginPage() {
             className="registration-form-content-input"
             type="text"
             required
-            placeholder={"Ім'я *"}
+            placeholder={"Пошта *"}
           ></input>
 
           <input

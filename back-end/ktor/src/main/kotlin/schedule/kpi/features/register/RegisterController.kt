@@ -24,6 +24,8 @@ class RegisterController(private val call: ApplicationCall) {
         }
         val userDTO = Users.fetchUser(registerReceiveRemote.login)
 
+        println(userDTO.toString())
+
         if (userDTO != null) {
             val responseModel = RegisterResponseModelEXC(message = "User already exists")
             call.respond(HttpStatusCode.BadRequest, responseModel)

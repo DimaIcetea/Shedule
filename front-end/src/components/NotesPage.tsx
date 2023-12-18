@@ -48,6 +48,13 @@ export default function NotesPage() {
     if (data) setCurrentNotes(data);
   }, [isLoading]);
 
+  useEffect(() => {
+    if (isModalOpened) document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isModalOpened]);
+
   async function formSubmitHandler(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const target = e.target as HTMLFormElement;
@@ -111,11 +118,13 @@ export default function NotesPage() {
                   className={"notes-createNote-form-input"}
                   placeholder="Введіть заголовок *"
                   required
+                  maxLength={50}
                 ></input>
                 <input
                   className={"notes-createNote-form-input"}
                   placeholder="Для предмету *"
                   required
+                  maxLength={30}
                 ></input>
                 <select
                   placeholder="Оберіть тип"
@@ -136,11 +145,13 @@ export default function NotesPage() {
                   className={"notes-createNote-form-input"}
                   placeholder="Додадіть посилання"
                   type="url"
+                  maxLength={128}
                 ></input>
                 <textarea
                   className={"notes-createNote-form-textArea"}
                   placeholder="Введіть зміст *"
                   required
+                  maxLength={256}
                 ></textarea>
                 <button
                   className={"notes-createNote-form-button"}
@@ -164,16 +175,22 @@ export default function NotesPage() {
                 onClick={() => deleteNoteHandler(note.id)}
               />
               <h3 className="notesList-note-header">
-                {note.title}{" "}
+                {note.title}
+                <br />
                 {note.link ? (
-                  <a
-                    className="notesList-note-link"
-                    href={note.link}
-                    target="_blank"
-                  >
-                    Посилання
-                  </a>
-                ) : null}
+                  <>
+                    <a
+                      className="notesList-note-link"
+                      href={note.link}
+                      target="_blank"
+                    >
+                      {indexToLessonType(note.type)}
+                    </a>
+                  </>
+                ) : (
+                  <>{indexToLessonType(note.type)}</>
+                )}
+                {" по " + note.lesson}
               </h3>
               <p className="notesList-note-content">{note.content}</p>
             </div>
