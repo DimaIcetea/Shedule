@@ -34,28 +34,29 @@ fun Application.configureStudyRouting() {
             studyController.registerNewLesson()
         }
         delete("/study"){
-            this@routing.intercept(ApplicationCallPipeline.Features) {
-                val userToken = call.request.headers["Authorization"]
-                if (userToken.isNullOrEmpty()) {
-                    call.respond(HttpStatusCode.Unauthorized, "Authorization token is missing")
-                    return@intercept finish()
-                }
 
-                val user = transaction { Tokens.select { Tokens.token eq userToken }
-                        .map { UserFromTokenDTO( login = it[Tokens.login]) }.firstOrNull() }
-
-                if (user?.login == null) {
-                    call.respond(HttpStatusCode.Unauthorized, "Invalid token.")
-                    return@intercept finish()
-                }
-
-                val isAdmin = transaction { Users.fetchUser(user.login)?.admin }
-
-                if (isAdmin.toString() != "true") {
-                    call.respond(HttpStatusCode.Forbidden, "Access denied. Admin privileges required.")
-                    return@intercept finish()
-                }
+            val userToken = call.request.headers["Authorization"]
+            if (userToken.isNullOrEmpty()) {
+                call.respond(HttpStatusCode.Unauthorized, "Authorization token is missing")
+                return@delete
             }
+
+            val user = transaction { Tokens.select { Tokens.token eq userToken }
+                    .map { UserFromTokenDTO( login = it[Tokens.login]) }.firstOrNull() }
+
+            if (user?.login == null) {
+                call.respond(HttpStatusCode.Unauthorized, "Invalid token.")
+                return@delete
+            }
+
+            val isAdmin = transaction { Users.select { Users.login eq user.login}
+                    .map { it[Users.admin] }.firstOrNull() }
+
+            if (isAdmin?.toString() != "true") {
+                call.respond(HttpStatusCode.Forbidden, "Access denied. Admin privileges required.")
+                return@delete
+            }
+
 
             val period = call.parameters["period"]?.toIntOrNull()
             val day = call.parameters["day"]?.toIntOrNull()
@@ -77,11 +78,11 @@ fun Application.configureStudyRouting() {
             }
         }
         patch("/study"){
-            this@routing.intercept(ApplicationCallPipeline.Features) {
+
                 val userToken = call.request.headers["Authorization"]
                 if (userToken.isNullOrEmpty()) {
                     call.respond(HttpStatusCode.Unauthorized, "Authorization token is missing")
-                    return@intercept finish()
+                    return@patch
                 }
 
                 val user = transaction { Tokens.select { Tokens.token eq userToken }
@@ -89,16 +90,17 @@ fun Application.configureStudyRouting() {
 
                 if (user?.login == null) {
                     call.respond(HttpStatusCode.Unauthorized, "Invalid token.")
-                    return@intercept finish()
+                    return@patch
                 }
 
-                val isAdmin = transaction { Users.fetchUser(user.login)?.admin }
+                val isAdmin = transaction { Users.select { Users.login eq user.login}
+                        .map { it[Users.admin] }.firstOrNull() }
 
-                if (isAdmin.toString() != "true") {
+                if (isAdmin?.toString() != "true") {
                     call.respond(HttpStatusCode.Forbidden, "Access denied. Admin privileges required.")
-                    return@intercept finish()
+                    return@patch
                 }
-            }
+
 
             val period = call.parameters["period"]?.toIntOrNull()
             val day = call.parameters["day"]?.toIntOrNull()

@@ -10,7 +10,7 @@ object Users: Table("users") {
     private val password = Users.varchar("password", 25)
     private val email = Users.varchar("email", 25)
     private val secret = Users.varchar("secret", 10)
-    private val admin = Users.bool("admin").default(false)
+    val admin = Users.bool("admin").default(false)
 
     fun insert(userDTO: UserDTO) {
         transaction {
