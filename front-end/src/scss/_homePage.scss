@@ -1,0 +1,128 @@
+.groupSelector {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+
+  &-content {
+    background-color: $input-color;
+    border-radius: 1rem;
+    display: flex;
+    padding: 0 0.5rem;
+    align-items: center;
+
+    &-text {
+      margin: 0.5rem 0.2rem;
+    }
+
+    &-select {
+      background-color: #d9d9d9;
+      height: 1.3rem;
+    }
+  }
+}
+
+.contentSwitcher {
+  display: flex;
+  justify-content: center;
+
+  &-content {
+    display: flex;
+    background-color: $input-color;
+    border-radius: 1rem;
+    padding: 0 0.5rem;
+
+    &-noData {
+      margin: 0.1rem;
+
+      &-text {
+        margin: 0.5rem 0.2rem;
+      }
+    }
+
+    &-option {
+      margin: 0.1rem;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #c9c9c9;
+        border-radius: 1rem;
+      }
+
+      &-text {
+        margin: 0.5rem 0.2rem;
+      }
+
+      &-active {
+        background-color: #b9b9b9;
+        border-radius: 1rem;
+      }
+    }
+  }
+}
+
+.schedule {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+
+  &-sub {
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+
+    &-header {
+      text-align: center;
+    }
+
+    &-body {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      &-cell {
+        width: 15%;
+        margin-left: 0.3%;
+        margin-right: 0.3%;
+        background-color: $input-color;
+        border-radius: 1rem;
+
+        &-text {
+          &-hyperlink {
+            cursor: pointer;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+          &-disabled {
+            color: #797979;
+          }
+        }
+
+        &-headerText {
+          font-size: 1.3rem;
+          color: black;
+          text-align: center;
+        }
+
+        &-data {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          color: black;
+          min-height: 2rem;
+          margin: 0.5rem 0;
+
+          &-subText {
+            font-size: 0.8rem;
+            margin: 0;
+          }
+
+          &-mainText {
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+}

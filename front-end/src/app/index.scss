@@ -1,0 +1,27 @@
+@import "../scss/variables";
+@import "../scss/homePage";
+@import "../scss/header";
+@import "../scss/not-found";
+@import "../scss/registration";
+@import "../scss/notes";
+@import "../scss/changeSchedule";
+@import "../scss/modal";
+
+html {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+html::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
+
+body {
+  background-image: url("../images/background.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+a {
+  all: unset;
+}

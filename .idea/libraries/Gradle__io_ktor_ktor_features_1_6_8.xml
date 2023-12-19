@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: io.ktor:ktor-features:1.6.8" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="io.ktor" artifactId="ktor-features" version="1.6.8" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-features/1.6.8/63b261c40190c9d0decfaea65f93931e424d1163/ktor-features-jvm-1.6.8.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-features/1.6.8/f35cf11a7f85dee7dc64ca7bc3599b137f01aad1/ktor-features-1.6.8-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

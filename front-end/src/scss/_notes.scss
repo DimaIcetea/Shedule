@@ -1,0 +1,118 @@
+.notes {
+  display: flex;
+  justify-content: center;
+
+  &-createNote {
+    background-color: $input-color;
+    padding: 0.3rem 0.5rem;
+    border-radius: 1rem;
+    width: 13rem;
+
+    &-button {
+      margin: 0;
+      padding: 0.3rem;
+      border-radius: 1rem;
+      cursor: pointer;
+      &:hover {
+        background-color: #b9b9b9;
+      }
+    }
+
+    &-form {
+      display: flex;
+      flex-direction: column;
+
+      &-cross {
+        width: 1rem;
+        height: 1rem;
+        position: relative;
+        left: 12rem;
+        cursor: pointer;
+
+        &:hover {
+          filter: invert(13%) sepia(71%) saturate(7466%) hue-rotate(1deg) brightness(94%) contrast(121%);
+        }
+      }
+
+      &-button {
+        cursor: pointer;
+        text-align: center;
+        margin: 0 0.2rem;
+        background-color: #fff;
+        &:hover {
+          background-color: $link-color;
+        }
+      }
+
+      &-input,
+      &-textArea,
+      &-select {
+        all: unset;
+        margin: 0.3rem;
+        padding: 0.4rem;
+        background-color: #fff;
+      }
+
+      &-select {
+        cursor: pointer;
+      }
+
+      &-textArea {
+        height: 4rem;
+        text-align: start;
+      }
+    }
+  }
+}
+
+.notesList {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 3rem 5%;
+
+  &-note {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    background-color: $input-color;
+    margin: 0.5rem;
+    padding: 0.3rem;
+    border-radius: 1rem;
+    width: 18%;
+
+    &-cross {
+      position: absolute;
+      right: 0.5rem;
+      top: 0.5rem;
+      cursor: pointer;
+      width: 1rem;
+      height: 1rem;
+
+      &:hover {
+        filter: invert(13%) sepia(71%) saturate(7466%) hue-rotate(1deg) brightness(94%) contrast(121%);
+      }
+    }
+
+    &-header,
+    &-content {
+      margin: 0.5rem;
+    }
+
+    &-header {
+      margin-top: 1rem;
+    }
+
+    &-content {
+      margin-bottom: 1rem;
+      word-break: break-word;
+    }
+
+    &-link {
+      color: #b9b9b9;
+      cursor: pointer;
+      &:hover {
+        color: $link-color;
+      }
+    }
+  }
+}
